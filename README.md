@@ -2,59 +2,57 @@
 
 自動下載[台灣銀行牌告匯率 CSV](https://rate.bot.com.tw/xrt/flcsv/0/day)，轉成 **JSON** 後存到 GitHub，再透過 **jsDelivr 免費 CDN** 提供穩定 HTTPS 網址，供 NetSuite SuiteScript 直接 `JSON.parse` 使用（不必再解析 CSV）。
 
-## 為什麼需要 CDN？
+## 文件（Documentation）
 
-| 直接打台銀 | 經由 CDN |
-| --- | --- |
-| 有 Akamai bot 防護，NetSuite `N/https` 常被擋 | CDN 為一般靜態檔，NetSuite 可穩定 GET |
-| URL / 行為偶發變更 | 固定 URL：`.../data/bot-xrt-latest.json` |
-| 無邊緣快取 | 全球 CDN 節點 |
+| 語言 Language | 使用文件 Markdown | 技術文件 Markdown | 使用文件 Word | 技術文件 Word |
+| --- | --- | --- | --- | --- |
+| 繁體中文 | [docs/USER_GUIDE.zh-TW.md](docs/USER_GUIDE.zh-TW.md) | [docs/TECHNICAL.zh-TW.md](docs/TECHNICAL.zh-TW.md) | [docs/word/USER_GUIDE.zh-TW.docx](docs/word/USER_GUIDE.zh-TW.docx) | [docs/word/TECHNICAL.zh-TW.docx](docs/word/TECHNICAL.zh-TW.docx) |
+| English | [docs/USER_GUIDE.en.md](docs/USER_GUIDE.en.md) | [docs/TECHNICAL.en.md](docs/TECHNICAL.en.md) | [docs/word/USER_GUIDE.en.docx](docs/word/USER_GUIDE.en.docx) | [docs/word/TECHNICAL.en.docx](docs/word/TECHNICAL.en.docx) |
 
-## 免費 CDN 評估（本專案採用 jsDelivr）
+完整索引： [docs/README.md](docs/README.md)
 
-| 方案 | 費用 | 適合本情境 | 說明 |
-| --- | --- | --- | --- |
-| **GitHub + jsDelivr**（採用） | 免費 | ★★★★★ | Public repo 即可；`cdn.jsdelivr.net/gh/...`；可 purge |
-| GitHub Raw | 免費 | ★★★☆☆ | 無 CDN 加速，有 rate limit，可當備援 |
-| Cloudflare R2 / Pages | 免費額度 | ★★★★☆ | 需額外帳號與設定 |
-| Lunaris / FilePost 等 | 免費額度 | ★★☆☆☆ | API 上傳方便，但長期維運與合規較難評估 |
+- **使用文件**：給業務／管理員——如何取得 CDN 網址、NetSuite 設定、FAQ  
+- **技術文件**：給工程師——架構、CSV/JSON 契約、排程、如何修改下載／轉換／NetSuite 邏輯  
+- **Word 檔**：位於 `docs/word/`；更新 Markdown 後可執行 `python3 scripts/md_to_docx.py` 重新產生
 
-**建議正式路徑（JSON，給 NetSuite）：**
+## CDN URLs
+
+**JSON（建議 / recommended）：**
 
 ```text
 https://cdn.jsdelivr.net/gh/ChesleyLo/DownloadBankOfTaiwanExchangeRate@main/data/bot-xrt-latest.json
 ```
 
-**CSV 原始檔（可選）：**
+**CSV（可選 / optional）：**
 
 ```text
 https://cdn.jsdelivr.net/gh/ChesleyLo/DownloadBankOfTaiwanExchangeRate@main/data/bot-xrt-latest.csv
 ```
 
-**備援（GitHub Raw）：**
+**備援 / fallback (GitHub Raw):**
 
 ```text
 https://raw.githubusercontent.com/ChesleyLo/DownloadBankOfTaiwanExchangeRate/main/data/bot-xrt-latest.json
 ```
-## 架構
+
+## 架構 Architecture
 
 ```text
 台銀 CSV URL
-    │  (scripts/download_bot_rates.py + curl_cffi → 轉 JSON)
+    │  (scripts/download_bot_rates.py + curl_cffi → JSON)
     ▼
 GitHub repo
   /data/bot-xrt-latest.csv
   /data/bot-xrt-latest.json
-    │  (GitHub Actions 平日排程更新 + jsDelivr purge)
+    │  (GitHub Actions + jsDelivr purge)
     ▼
 jsDelivr CDN
     │
     ▼
 NetSuite Scheduled Script (N/https.get + JSON.parse)
-  → 直接讀 byCurrency.USD.spot.sell 等欄位
 ```
 
-### JSON 結構（節錄）
+### JSON 節錄 / excerpt
 
 ```json
 {
@@ -73,58 +71,35 @@ NetSuite Scheduled Script (N/https.get + JSON.parse)
       }
     }
   },
-  "rates": [ "…同結構陣列…" ]
+  "rates": ["…same objects in array…"]
 }
 ```
 
-無報價欄位會是 `null`（不是 `0`）。
+無報價為 `null`（不是 `0`）。 Missing quotes are `null`, not `0`.
 
-## 快速開始
-
-### 1. 本機下載一次
+## 快速開始 Quick start
 
 ```bash
 python3 -m pip install -r requirements.txt
 python3 scripts/download_bot_rates.py
 ```
 
-成功後會產生：
+產出 / outputs：
 
-- `data/bot-xrt-latest.json`（給 NetSuite / CDN，建議使用）
-- `data/bot-xrt-latest.csv`（台銀原始 CSV）
-- `data/bot-xrt-YYYY-MM-DD.{csv,json}`（當日歸檔）
-- `data/bot-xrt-latest.meta.txt`（抓取時間與 checksum）
+- `data/bot-xrt-latest.json` — NetSuite / CDN 主檔  
+- `data/bot-xrt-latest.csv` — 台銀原始 CSV  
+- `data/bot-xrt-YYYY-MM-DD.{csv,json}` — 當日歸檔  
+- `data/bot-xrt-latest.meta.txt` — checksum  
 
-### 2. 推到 GitHub（啟用免費 CDN）
+排程：平日台灣 09:10–16:10 每小時 + 18:30（詳見使用文件）。  
+NetSuite 腳本：`netsuite/DownloadBotRates_SS2.js`（設定步驟見使用文件）。
 
-Repo 已公開：`ChesleyLo/DownloadBankOfTaiwanExchangeRate`。更新後 push `main` 即可。
+## 注意事項 Notes
 
-Actions 工作流：`.github/workflows/update-rates.yml`  
-平日台灣約營業時段會自動抓檔並轉 JSON；內容有變才 commit，並呼叫 jsDelivr purge。
+- 請勿讓 NetSuite 直連台銀官方下載網址（有 bot 防護）。  
+- Repository 必須為 **public**，jsDelivr 才能提供 CDN。  
+- 匯率來源為台灣銀行；CDN 為排程鏡像，可能有延遲。  
 
-也可在 GitHub → Actions → **Update BOT FX Rates** → Run workflow 手動執行。
+## 授權與免責 Disclaimer
 
-### 3. NetSuite 設定
-
-1. 上傳 `netsuite/DownloadBotRates_SS2.js`
-2. 確認腳本內 CDN JSON URL（或 Script Parameter `custscript_bot_cdn_json_url`）
-3. 將 `FOLDER_ID` 改成 File Cabinet 目標資料夾 internal id
-4. 建立 **Scheduled Script** Deployment（建議台灣時間收盤後執行）
-5. 在 NetSuite 後台允許對 `cdn.jsdelivr.net` 的 outbound HTTPS
-
-腳本會：
-
-1. `N/https.get` 從 CDN 下載 JSON  
-2. `JSON.parse` 後直接使用 `payload.byCurrency.USD.spot.sell` 等欄位  
-3. 存成 `bot-xrt-latest.json` 與當日檔名到 File Cabinet
-
-## 注意事項
-
-- 台銀網站有 bot 防護；本專案用 `curl_cffi`（模擬瀏覽器 TLS）在 GitHub Actions / 本機下載。請勿把台銀原始 URL 直接塞給 NetSuite。
-- jsDelivr 對 GitHub 檔案可能有快取；工作流已在更新後 purge。若仍看到舊檔，可暫時改用 GitHub Raw 備援 URL，或在 URL 加上 `?t=<timestamp>`（部分客戶端有效）。
-- 匯率為公開資訊，但仍請依貴公司合規要求標示資料來源為台灣銀行。
-- Repository 需為 **public**，jsDelivr 才能免設定提供 CDN。
-
-## 授權與免責
-
-本專案僅提供技術串接範例。匯率數值以台灣銀行官方為準；CDN 上的檔案為排程鏡像，可能有數分鐘到數小時延遲。商業使用請自行確認合規與正確性。
+本專案為技術串接範例。數值以台灣銀行官方為準；商業使用請自行確認合規與正確性。
