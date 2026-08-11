@@ -30,8 +30,8 @@ jobs:
       - name: Download BOT CSV and build JSON
         id: download
         run: |
-          python scripts/download_bot_rates.py
-          if git diff --quiet -- data/bot-xrt-latest.csv data/bot-xrt-latest.json; then
+          python scripts/download_bot_rates.py --retention-days 90
+          if git diff --quiet -- data/bot-xrt-latest.csv data/bot-xrt-latest.json data/history; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"

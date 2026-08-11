@@ -145,6 +145,8 @@ Change it to your target folder’s internal ID.
    - `bot-xrt-YYYY-MM-DD.json`  
 4. Writes an audit log entry (including a USD spot-sell summary)
 
+> On GitHub, historical files live under `data/history/` and only the last 90 days are kept. NetSuite File Cabinet naming is independent.
+
 > By default the script **does not** create NetSuite Currency Rate records. Enabling that requires a code change described in the technical guide.
 
 ---

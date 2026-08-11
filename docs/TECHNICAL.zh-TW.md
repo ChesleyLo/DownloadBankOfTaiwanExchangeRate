@@ -54,7 +54,8 @@ DownloadBankOfTaiwanExchangeRate/
 │   ├── bot-xrt-latest.csv               # 最新原始 CSV
 │   ├── bot-xrt-latest.json              # 最新 JSON（CDN 主檔）
 │   ├── bot-xrt-latest.meta.txt          # checksum / 抓取時間
-│   └── bot-xrt-YYYY-MM-DD.*             # 當日歸檔
+│   └── history/                         # 歷史歸檔（只留最近 90 天）
+│       └── bot-xrt-YYYY-MM-DD.*
 ├── docs/                                # 本文件區
 ├── netsuite/DownloadBotRates_SS2.js     # NetSuite Scheduled Script
 ├── scripts/download_bot_rates.py        # 下載 + 轉換核心
@@ -81,7 +82,8 @@ python3 scripts/download_bot_rates.py
 | 參數 | 說明 |
 | --- | --- |
 | `-o` / `--output` | 指定 `bot-xrt-latest.csv` 路徑；JSON 會寫在同目錄 |
-| `--no-archive` | 不寫 `bot-xrt-YYYY-MM-DD.*` 歸檔 |
+| `--no-archive` | 不寫 `data/history/bot-xrt-YYYY-MM-DD.*` 歸檔 |
+| `--retention-days` | 歷史保留天數（預設 `90`） |
 
 ### 3.3 成功輸出範例
 
@@ -92,8 +94,18 @@ csv_bytes=3715
 json_bytes=22669
 rate_count=19
 changed=true
-archive_json=.../data/bot-xrt-2026-08-11.json
+archive_json=.../data/history/bot-xrt-2026-08-11.json
+retention_days=90
+history_migrated=0
+history_pruned=0
 ```
+
+歷史策略：
+
+- 歸檔目錄：`data/history/`
+- 檔名：`bot-xrt-YYYY-MM-DD.csv` / `.json`
+- 預設只保留最近 **90** 天；超過會自動刪除
+- 若 `data/` 根目錄仍有舊的日期檔，執行時會自動搬到 `history/`
 
 `changed=false` 表示內容與上次相同，檔案未覆寫（meta 仍會更新）。
 
@@ -109,7 +121,9 @@ archive_json=.../data/bot-xrt-2026-08-11.json
 | `_to_rate()` | 字串→數字；`0`→`null` | 想保留 0、改精度、過濾規則 |
 | `_forward_block()` | 組遠期 10～180 天 | 增減 tenor |
 | `csv_to_payload()` | CSV→JSON 結構 | **改 JSON schema 的主要入口** |
-| `write_outputs()` | 寫 CSV/JSON/meta/archive | 改檔名、歸檔策略、變更偵測 |
+| `write_outputs()` | 寫 CSV/JSON/meta/history | 改檔名、歸檔策略、變更偵測 |
+| `migrate_legacy_archives()` | 把舊日期檔搬到 `history/` | 相容舊結構 |
+| `prune_history()` | 刪除超過保留天數的歷史檔 | 改保留天數邏輯 |
 | `main()` | CLI | 加參數、加後處理 |
 
 ### 4.2 關鍵常數

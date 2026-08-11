@@ -54,7 +54,8 @@ DownloadBankOfTaiwanExchangeRate/
 │   ├── bot-xrt-latest.csv               # latest raw CSV
 │   ├── bot-xrt-latest.json              # latest JSON (CDN primary)
 │   ├── bot-xrt-latest.meta.txt          # checksum / fetch time
-│   └── bot-xrt-YYYY-MM-DD.*             # daily archive
+│   └── history/                         # dated archives (last 90 days only)
+│       └── bot-xrt-YYYY-MM-DD.*
 ├── docs/                                # documentation
 ├── netsuite/DownloadBotRates_SS2.js     # NetSuite Scheduled Script
 ├── scripts/download_bot_rates.py        # download + transform core
@@ -81,7 +82,8 @@ python3 scripts/download_bot_rates.py
 | Flag | Purpose |
 | --- | --- |
 | `-o` / `--output` | Path for `bot-xrt-latest.csv`; JSON is written beside it |
-| `--no-archive` | Skip dated `bot-xrt-YYYY-MM-DD.*` archives |
+| `--no-archive` | Skip dated archives under `data/history/` |
+| `--retention-days` | Keep only the latest N days in history (default `90`) |
 
 ### 3.3 Example success output
 
@@ -92,8 +94,18 @@ csv_bytes=3715
 json_bytes=22669
 rate_count=19
 changed=true
-archive_json=.../data/bot-xrt-2026-08-11.json
+archive_json=.../data/history/bot-xrt-2026-08-11.json
+retention_days=90
+history_migrated=0
+history_pruned=0
 ```
+
+History policy:
+
+- Directory: `data/history/`
+- Filenames: `bot-xrt-YYYY-MM-DD.csv` / `.json`
+- Default retention: **90** days (older files are deleted automatically)
+- Legacy dated files left under `data/` are moved into `history/` on each run
 
 `changed=false` means content matched the previous files (meta still refreshes).
 
@@ -109,7 +121,9 @@ archive_json=.../data/bot-xrt-2026-08-11.json
 | `_to_rate()` | Parse numbers; map `0` → `null` | Keep zeros, precision, filters |
 | `_forward_block()` | Build forward tenors | Add/remove days |
 | `csv_to_payload()` | CSV → JSON | **Primary place to change JSON schema** |
-| `write_outputs()` | Write CSV/JSON/meta/archives | Filenames, archive policy, change detection |
+| `write_outputs()` | Write CSV/JSON/meta/history | Filenames, archive policy, change detection |
+| `migrate_legacy_archives()` | Move old dated files into `history/` | Compatibility with previous layout |
+| `prune_history()` | Delete files older than retention | Retention policy changes |
 | `main()` | CLI | Extra args / post-steps |
 
 ### 4.2 Key constants

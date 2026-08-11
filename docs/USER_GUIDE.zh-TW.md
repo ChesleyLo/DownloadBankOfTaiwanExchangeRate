@@ -145,6 +145,8 @@ GitHub Actions 在**週一至週五**自動抓取（台灣時間）：
    - `bot-xrt-YYYY-MM-DD.json`  
 4. 在 Execution Log 留下 audit 訊息（含 USD 即期賣出等摘要）
 
+> GitHub 端歷史檔放在 `data/history/`，預設只保留最近 90 天；NetSuite File Cabinet 的命名與此獨立。
+
 > 預設**不會**自動寫入 NetSuite Currency Rate 記錄。若要寫入，請技術人員依技術文件開啟並調整 `maybeApplyRates`。
 
 ---

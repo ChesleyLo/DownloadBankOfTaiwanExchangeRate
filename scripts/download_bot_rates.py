@@ -8,15 +8,18 @@ import csv
 import hashlib
 import io
 import json
+import re
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from curl_cffi import requests
 
 BOT_CSV_URL = "https://rate.bot.com.tw/xrt/flcsv/0/day"
 DEFAULT_OUTPUT = Path(__file__).resolve().parents[1] / "data" / "bot-xrt-latest.csv"
+DEFAULT_RETENTION_DAYS = 90
 FORWARD_DAYS = (10, 30, 60, 90, 120, 150, 180)
+HISTORY_NAME_RE = re.compile(r"^bot-xrt-(\d{4}-\d{2}-\d{2})\.(csv|json)$")
 
 # CSV columns after currency code:
 # buy_label, cash_buy, spot_buy, fwd10..180_buy,
@@ -136,8 +139,63 @@ def _write_if_changed(path: Path, content: bytes) -> bool:
     return True
 
 
-def write_outputs(content: bytes, latest_csv: Path, archive: bool) -> dict:
-    latest_csv.parent.mkdir(parents=True, exist_ok=True)
+def history_dir(data_dir: Path) -> Path:
+    return data_dir / "history"
+
+
+def migrate_legacy_archives(data_dir: Path) -> list[Path]:
+    """Move data/bot-xrt-YYYY-MM-DD.* into data/history/."""
+    moved: list[Path] = []
+    dest_root = history_dir(data_dir)
+    dest_root.mkdir(parents=True, exist_ok=True)
+    for path in sorted(data_dir.glob("bot-xrt-*.*")):
+        if path.name.startswith("bot-xrt-latest"):
+            continue
+        if not HISTORY_NAME_RE.match(path.name):
+            continue
+        dest = dest_root / path.name
+        if dest.exists():
+            path.unlink()
+        else:
+            path.replace(dest)
+            moved.append(dest)
+    return moved
+
+
+def prune_history(data_dir: Path, retention_days: int, today: datetime | None = None) -> list[Path]:
+    """Delete history files older than retention_days. Returns deleted paths."""
+    if retention_days < 1:
+        raise ValueError("retention_days must be >= 1")
+
+    now = today or datetime.now(timezone.utc)
+    cutoff = (now - timedelta(days=retention_days)).date()
+    deleted: list[Path] = []
+    root = history_dir(data_dir)
+    if not root.exists():
+        return deleted
+
+    for path in sorted(root.glob("bot-xrt-*.*")):
+        match = HISTORY_NAME_RE.match(path.name)
+        if not match:
+            continue
+        file_date = datetime.strptime(match.group(1), "%Y-%m-%d").date()
+        if file_date < cutoff:
+            path.unlink()
+            deleted.append(path)
+    return deleted
+
+
+def write_outputs(
+    content: bytes,
+    latest_csv: Path,
+    archive: bool,
+    retention_days: int = DEFAULT_RETENTION_DAYS,
+) -> dict:
+    data_dir = latest_csv.parent
+    data_dir.mkdir(parents=True, exist_ok=True)
+    hist_dir = history_dir(data_dir)
+    hist_dir.mkdir(parents=True, exist_ok=True)
+
     fetched_at = datetime.now(timezone.utc).isoformat()
     payload = csv_to_payload(content, fetched_at)
     json_text = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
@@ -148,14 +206,18 @@ def write_outputs(content: bytes, latest_csv: Path, archive: bool) -> dict:
     json_changed = _write_if_changed(latest_json, json_bytes)
     changed = csv_changed or json_changed
 
+    migrated = migrate_legacy_archives(data_dir)
+
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    archive_csv = latest_csv.parent / f"bot-xrt-{today}.csv"
-    archive_json = latest_csv.parent / f"bot-xrt-{today}.json"
+    archive_csv = hist_dir / f"bot-xrt-{today}.csv"
+    archive_json = hist_dir / f"bot-xrt-{today}.json"
     if archive:
         if changed or not archive_csv.exists():
             archive_csv.write_bytes(content)
         if changed or not archive_json.exists():
             archive_json.write_bytes(json_bytes)
+
+    deleted = prune_history(data_dir, retention_days=retention_days)
 
     meta_path = latest_csv.parent / "bot-xrt-latest.meta.txt"
     meta_path.write_text(
@@ -168,6 +230,10 @@ def write_outputs(content: bytes, latest_csv: Path, archive: bool) -> dict:
                 f"csv_bytes={len(content)}",
                 f"json_bytes={len(json_bytes)}",
                 f"rate_count={payload['rateCount']}",
+                f"history_dir={hist_dir.as_posix()}",
+                f"retention_days={retention_days}",
+                f"history_migrated={len(migrated)}",
+                f"history_pruned={len(deleted)}",
                 f"changed={'yes' if changed else 'no'}",
                 "",
             ]
@@ -176,7 +242,7 @@ def write_outputs(content: bytes, latest_csv: Path, archive: bool) -> dict:
     )
 
     return {
-        "changed": changed,
+        "changed": changed or bool(migrated) or bool(deleted),
         "latest_csv": latest_csv,
         "latest_json": latest_json,
         "archive_csv": archive_csv if archive else None,
@@ -184,6 +250,9 @@ def write_outputs(content: bytes, latest_csv: Path, archive: bool) -> dict:
         "csv_bytes": len(content),
         "json_bytes": len(json_bytes),
         "rate_count": payload["rateCount"],
+        "history_migrated": len(migrated),
+        "history_pruned": len(deleted),
+        "retention_days": retention_days,
     }
 
 
@@ -199,13 +268,24 @@ def main() -> int:
     parser.add_argument(
         "--no-archive",
         action="store_true",
-        help="Do not write dated archive copies",
+        help="Do not write dated archive copies under data/history/",
+    )
+    parser.add_argument(
+        "--retention-days",
+        type=int,
+        default=DEFAULT_RETENTION_DAYS,
+        help=f"Keep only the latest N days in data/history/ (default: {DEFAULT_RETENTION_DAYS})",
     )
     args = parser.parse_args()
 
     try:
         content = download_csv()
-        result = write_outputs(content, args.output, archive=not args.no_archive)
+        result = write_outputs(
+            content,
+            args.output,
+            archive=not args.no_archive,
+            retention_days=args.retention_days,
+        )
     except Exception as exc:  # noqa: BLE001 - surface any download failure to CI
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1
@@ -215,6 +295,9 @@ def main() -> int:
     print(f"csv_bytes={result['csv_bytes']}")
     print(f"json_bytes={result['json_bytes']}")
     print(f"rate_count={result['rate_count']}")
+    print(f"retention_days={result['retention_days']}")
+    print(f"history_migrated={result['history_migrated']}")
+    print(f"history_pruned={result['history_pruned']}")
     print(f"changed={str(result['changed']).lower()}")
     if result["archive_json"]:
         print(f"archive_json={result['archive_json']}")

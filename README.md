@@ -93,7 +93,7 @@ python3 scripts/download_bot_rates.py
 
 - `data/bot-xrt-latest.json` — NetSuite / CDN 主檔  
 - `data/bot-xrt-latest.csv` — 台銀原始 CSV  
-- `data/bot-xrt-YYYY-MM-DD.{csv,json}` — 當日歸檔  
+- `data/history/bot-xrt-YYYY-MM-DD.{csv,json}` — 歷史歸檔（**只保留最近 90 天**）  
 - `data/bot-xrt-latest.meta.txt` — checksum  
 
 排程：平日台灣 09:10–16:10 每小時 + 18:30（詳見使用文件）。  
