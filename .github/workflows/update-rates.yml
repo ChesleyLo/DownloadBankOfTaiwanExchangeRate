@@ -1,4 +1,4 @@
-name: Update BOT FX Rates CSV
+name: Update BOT FX Rates
 
 on:
   schedule:
@@ -27,11 +27,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Download BOT CSV
+      - name: Download BOT CSV and build JSON
         id: download
         run: |
           python scripts/download_bot_rates.py
-          if git diff --quiet -- data/bot-xrt-latest.csv; then
+          if git diff --quiet -- data/bot-xrt-latest.csv data/bot-xrt-latest.json; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -43,7 +43,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/
-          git commit -m "chore: update Bank of Taiwan FX rates CSV"
+          git commit -m "chore: update Bank of Taiwan FX rates CSV/JSON"
           git push
 
       - name: Purge jsDelivr cache
@@ -51,6 +51,7 @@ jobs:
         env:
           REPO: ${{ github.repository }}
         run: |
-          # Purge latest CSV so CDN consumers get fresh rates quickly.
-          curl -fsS "https://purge.jsdelivr.net/gh/${REPO}@main/data/bot-xrt-latest.csv" || true
-          curl -fsS "https://purge.jsdelivr.net/gh/${REPO}/data/bot-xrt-latest.csv" || true
+          for file in bot-xrt-latest.csv bot-xrt-latest.json; do
+            curl -fsS "https://purge.jsdelivr.net/gh/${REPO}@main/data/${file}" || true
+            curl -fsS "https://purge.jsdelivr.net/gh/${REPO}/data/${file}" || true
+          done
