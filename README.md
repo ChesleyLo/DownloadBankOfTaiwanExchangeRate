@@ -4,16 +4,21 @@
 
 ## 文件（Documentation）
 
-| 語言 Language | 使用文件 Markdown | 技術文件 Markdown | 使用文件 Word | 技術文件 Word |
+| 語言 Language | 使用文件 Markdown | 技術文件 Markdown | Word | PDF |
 | --- | --- | --- | --- | --- |
-| 繁體中文 | [docs/USER_GUIDE.zh-TW.md](docs/USER_GUIDE.zh-TW.md) | [docs/TECHNICAL.zh-TW.md](docs/TECHNICAL.zh-TW.md) | [docs/word/USER_GUIDE.zh-TW.docx](docs/word/USER_GUIDE.zh-TW.docx) | [docs/word/TECHNICAL.zh-TW.docx](docs/word/TECHNICAL.zh-TW.docx) |
-| English | [docs/USER_GUIDE.en.md](docs/USER_GUIDE.en.md) | [docs/TECHNICAL.en.md](docs/TECHNICAL.en.md) | [docs/word/USER_GUIDE.en.docx](docs/word/USER_GUIDE.en.docx) | [docs/word/TECHNICAL.en.docx](docs/word/TECHNICAL.en.docx) |
+| 繁體中文 | [docs/USER_GUIDE.zh-TW.md](docs/USER_GUIDE.zh-TW.md) | [docs/TECHNICAL.zh-TW.md](docs/TECHNICAL.zh-TW.md) | [docs/word/](docs/word/) | [docs/pdf/](docs/pdf/) |
+| English | [docs/USER_GUIDE.en.md](docs/USER_GUIDE.en.md) | [docs/TECHNICAL.en.md](docs/TECHNICAL.en.md) | [docs/word/](docs/word/) | [docs/pdf/](docs/pdf/) |
 
 完整索引： [docs/README.md](docs/README.md)
 
 - **使用文件**：給業務／管理員——如何取得 CDN 網址、NetSuite 設定、FAQ  
 - **技術文件**：給工程師——架構、CSV/JSON 契約、排程、如何修改下載／轉換／NetSuite 邏輯  
-- **Word 檔**：位於 `docs/word/`；更新 Markdown 後可執行 `python3 scripts/md_to_docx.py` 重新產生
+- **Word / PDF**：位於 `docs/word/`、`docs/pdf/`；更新 Markdown 後可執行：
+
+```bash
+python3 scripts/md_to_docx.py
+python3 scripts/md_to_pdf.py
+```
 
 ## CDN URLs
 
