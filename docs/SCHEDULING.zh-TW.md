@@ -25,10 +25,30 @@ GitHub 內建 `schedule`（cron）常會延遲或整段漏跑。本專案改為�
 
 > Token 不要 commit 進 repo。只貼到外部排程服務的密鑰欄位。
 
-### 1.2 在 cron-job.org 建立工作
+### 1.2 一鍵建立（有 API Key 時）
 
-1. 註冊 [https://cron-job.org](https://cron-job.org)  
-2. Create cronjob，設定：
+1. 到 [cron-job.org](https://cron-job.org) 免費註冊 → **Settings** 複製 **API Key**  
+2. 在本機執行（GitHub token 會自動用 `gh auth token`）：
+
+```bash
+export CRONJOB_API_KEY="你的_cron-job_api_key"
+python3 scripts/setup_cron_job.py
+```
+
+會建立兩筆工作（平日）：
+
+- **09:10–16:10** 每小時  
+- **18:30** 晚間補抓  
+
+也可先預覽設定：
+
+```bash
+python3 scripts/setup_cron_job.py --dry-run
+```
+
+### 1.3 手動在 cron-job.org 建立（選用）
+
+若不想用 API，也可在網站手動建立：
 
 | 欄位 | 建議值 |
 | --- | --- |
@@ -77,7 +97,19 @@ cron-job.org 可建多筆，或用自訂 cron（若介面支援）：
 
 ---
 
-## 2. 本機／伺服器手動或 crontab
+## 2. 本機 Mac 備援（已可自動安裝）
+
+若 Mac 常開機，可安裝 LaunchAgent（使用 `gh auth`，不需額外 token）：
+
+```bash
+./scripts/install_launchd.sh
+```
+
+會在平日 09:10–16:10 與 18:30 觸發。日誌：`/tmp/bot-fx-trigger.log`
+
+---
+
+## 3. 本機／伺服器 crontab
 
 ```bash
 # 方式 A：已 gh login
@@ -100,7 +132,7 @@ Linux crontab 範例（需先 `chmod +x scripts/trigger_update.sh`）：
 
 ---
 
-## 3. GitHub 內建備援排程
+## 4. GitHub 內建備援排程
 
 目前 workflow 內備援（UTC）：
 
@@ -116,7 +148,7 @@ Linux crontab 範例（需先 `chmod +x scripts/trigger_update.sh`）：
 
 ---
 
-## 4. 故障排除
+## 5. 故障排除
 
 | 現象 | 處理 |
 | --- | --- |
@@ -127,8 +159,10 @@ Linux crontab 範例（需先 `chmod +x scripts/trigger_update.sh`）：
 
 ---
 
-## 5. 相關檔案
+## 6. 相關檔案
 
 - `.github/workflows/update-rates.yml`  
 - `scripts/trigger_update.sh`  
+- `scripts/setup_cron_job.py`（cron-job.org 一鍵建立）  
+- `scripts/install_launchd.sh`（Mac 本機備援）  
 - [TECHNICAL.zh-TW.md](./TECHNICAL.zh-TW.md)  

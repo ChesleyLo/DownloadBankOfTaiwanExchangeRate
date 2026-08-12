@@ -6,3 +6,4 @@ __pycache__/
 .DS_Store
 *.egg-info/
 .pytest_cache/
+scripts/launchd_trigger.sh

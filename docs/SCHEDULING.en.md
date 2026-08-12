@@ -23,10 +23,30 @@ GitHub’s native `schedule` cron is often delayed or skipped. This project uses
 
 > Never commit the token. Store it only in the external cron service’s secret fields.
 
-### 1.2 Create a job on cron-job.org
+### 1.2 One-command setup (when you have an API key)
 
-1. Sign up at [https://cron-job.org](https://cron-job.org)  
-2. Create a cronjob:
+1. Sign up at [cron-job.org](https://cron-job.org) → copy **API Key** from **Settings**  
+2. Run locally (GitHub token uses `gh auth token` automatically):
+
+```bash
+export CRONJOB_API_KEY="your_cron_job_api_key"
+python3 scripts/setup_cron_job.py
+```
+
+Creates two weekday jobs:
+
+- **09:10–16:10** hourly  
+- **18:30** evening catch-up  
+
+Preview without creating:
+
+```bash
+python3 scripts/setup_cron_job.py --dry-run
+```
+
+### 1.3 Manual setup on cron-job.org (optional)
+
+If you prefer the web UI:
 
 | Field | Value |
 | --- | --- |
@@ -71,7 +91,19 @@ Custom cron (if supported), timezone Asia/Taipei:
 
 ---
 
-## 2. Local / server trigger
+## 2. Local Mac fallback (installable)
+
+If your Mac is usually on, install a LaunchAgent (uses `gh auth`, no extra token):
+
+```bash
+./scripts/install_launchd.sh
+```
+
+Runs on weekdays at 09:10–16:10 and 18:30. Log: `/tmp/bot-fx-trigger.log`
+
+---
+
+## 3. Local / server crontab
 
 ```bash
 # A) gh already logged in
@@ -94,7 +126,7 @@ Example crontab:
 
 ---
 
-## 3. GitHub backup schedule
+## 4. GitHub backup schedule
 
 | UTC | Taiwan | Role |
 | --- | --- | --- |
@@ -107,7 +139,7 @@ Treat the external cron as primary.
 
 ---
 
-## 4. Troubleshooting
+## 5. Troubleshooting
 
 | Symptom | Action |
 | --- | --- |
@@ -118,8 +150,10 @@ Treat the external cron as primary.
 
 ---
 
-## 5. Related files
+## 6. Related files
 
 - `.github/workflows/update-rates.yml`  
 - `scripts/trigger_update.sh`  
+- `scripts/setup_cron_job.py` (one-click cron-job.org setup)  
+- `scripts/install_launchd.sh` (Mac local fallback)  
 - [TECHNICAL.en.md](./TECHNICAL.en.md)  
