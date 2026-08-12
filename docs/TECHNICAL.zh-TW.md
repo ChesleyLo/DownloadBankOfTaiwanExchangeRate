@@ -242,21 +242,29 @@ new_bytes = json.dumps(comparable, ensure_ascii=False, sort_keys=True).encode()
 
 ```yaml
 on:
-  schedule:
-    - cron: "10 1,2,3,4,5,6,7,8 * * 1-5"   # 台灣 09:10–16:10
-    - cron: "30 10 * * 1-5"                 # 台灣 18:30
-  workflow_dispatch:                        # 手動
+  workflow_dispatch:                 # 主要：外部 cron / 手動
+  repository_dispatch:
+    types: [update-bot-rates]
+  schedule:                          # 僅備援（UTC）
+    - cron: "30 2,7,10 * * 1-5"     # 台灣 10:30 / 15:30 / 18:30
 ```
 
-Cron 為 **UTC**。台灣 = UTC+8。
+**請以外部 cron 為主要觸發**（GitHub 內建 schedule 容易漏跑）。  
+完整設定步驟見 [SCHEDULING.zh-TW.md](./SCHEDULING.zh-TW.md)。
+
+本機觸發：
+
+```bash
+./scripts/trigger_update.sh
+```
 
 ### 5.2 如何改排程
 
 | 需求 | 改法 |
 | --- | --- |
-| 每天只跑一次 | 只留一條 cron，例如 `"0 9 * * 1-5"`（台灣 17:00） |
-| 含週末 | 把 `1-5` 改成 `*` |
-| 更頻繁 | 增加小時列表（注意 GitHub 免費額度與台銀壓力） |
+| 改外部執行時間 | 到 cron-job.org（或你的 crontab）調整 |
+| 改 GitHub 備援 | 編輯 `schedule.cron`（UTC） |
+| 暫時只手動 | 拿掉外部 cron；必要時保留/移除 `schedule` |
 
 ### 5.3 Job 步驟與可改點
 

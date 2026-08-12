@@ -1,15 +1,22 @@
 name: Update BOT FX Rates
 
+# Primary trigger: external cron → workflow_dispatch / repository_dispatch
+# (GitHub native schedule is unreliable and kept only as a sparse backup.)
 on:
-  schedule:
-    # Taiwan business hours approx. 09:00–16:00 (UTC+8) weekdays,
-    # plus one evening catch-up. GitHub cron uses UTC.
-    - cron: "10 1,2,3,4,5,6,7,8 * * 1-5"
-    - cron: "30 10 * * 1-5"
   workflow_dispatch:
+  repository_dispatch:
+    types: [update-bot-rates]
+  schedule:
+    # Backup only (UTC). Taiwan = UTC+8 → 10:30 / 15:30 / 18:30 weekdays.
+    - cron: "30 2,7,10 * * 1-5"
 
 permissions:
   contents: write
+  actions: read
+
+concurrency:
+  group: update-bot-rates
+  cancel-in-progress: false
 
 jobs:
   update:

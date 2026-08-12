@@ -4,10 +4,10 @@
 
 ## 文件（Documentation）
 
-| 語言 Language | 使用文件 Markdown | 技術文件 Markdown | Word | PDF |
-| --- | --- | --- | --- | --- |
-| 繁體中文 | [docs/USER_GUIDE.zh-TW.md](docs/USER_GUIDE.zh-TW.md) | [docs/TECHNICAL.zh-TW.md](docs/TECHNICAL.zh-TW.md) | [docs/word/](docs/word/) | [docs/pdf/](docs/pdf/) |
-| English | [docs/USER_GUIDE.en.md](docs/USER_GUIDE.en.md) | [docs/TECHNICAL.en.md](docs/TECHNICAL.en.md) | [docs/word/](docs/word/) | [docs/pdf/](docs/pdf/) |
+| 語言 Language | 使用文件 Markdown | 技術文件 Markdown | 排程 Scheduling | Word | PDF |
+| --- | --- | --- | --- | --- | --- |
+| 繁體中文 | [docs/USER_GUIDE.zh-TW.md](docs/USER_GUIDE.zh-TW.md) | [docs/TECHNICAL.zh-TW.md](docs/TECHNICAL.zh-TW.md) | [docs/SCHEDULING.zh-TW.md](docs/SCHEDULING.zh-TW.md) | [docs/word/](docs/word/) | [docs/pdf/](docs/pdf/) |
+| English | [docs/USER_GUIDE.en.md](docs/USER_GUIDE.en.md) | [docs/TECHNICAL.en.md](docs/TECHNICAL.en.md) | [docs/SCHEDULING.en.md](docs/SCHEDULING.en.md) | [docs/word/](docs/word/) | [docs/pdf/](docs/pdf/) |
 
 完整索引： [docs/README.md](docs/README.md)
 
@@ -96,7 +96,7 @@ python3 scripts/download_bot_rates.py
 - `data/history/bot-xrt-YYYY-MM-DD.{csv,json}` — 歷史歸檔（**只保留最近 90 天**）  
 - `data/bot-xrt-latest.meta.txt` — checksum  
 
-排程：平日台灣 09:10–16:10 每小時 + 18:30（詳見使用文件）。  
+排程：**以外部 cron 為主**（見 [docs/SCHEDULING.zh-TW.md](docs/SCHEDULING.zh-TW.md) / [docs/SCHEDULING.en.md](docs/SCHEDULING.en.md)）；GitHub 內建僅備援 10:30／15:30／18:30。  
 NetSuite 腳本：`netsuite/DownloadBotRates_SS2.js`（設定步驟見使用文件）。
 
 ## 注意事項 Notes

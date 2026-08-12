@@ -83,19 +83,21 @@ https://cdn.jsdelivr.net/gh/ChesleyLo/DownloadBankOfTaiwanExchangeRate@main/data
 
 ## 4. 資料多久更新一次？
 
-GitHub Actions 在**週一至週五**自動抓取（台灣時間）：
+**主要觸發：** 外部排程（如 cron-job.org）呼叫 GitHub API，建議台灣時間平日：
 
 | 時段 | 時間 |
 | --- | --- |
 | 營業時段 | 09:10、10:10、11:10、12:10、13:10、14:10、15:10、16:10 |
 | 晚間補抓 | 18:30 |
 
+**GitHub 內建備援（較稀疏，僅防外部中斷）：** 10:30、15:30、18:30（平日）
+
 說明：
 
-- 週末與台灣假日不會排程（僅平日）  
-- GitHub 排程可能延遲數分鐘  
-- **匯率沒有變化時不會重新發布**（CDN 內容維持上一版）  
-- 也可由技術人員在 GitHub → Actions 手動執行
+- 請依 [SCHEDULING.zh-TW.md](./SCHEDULING.zh-TW.md) 完成外部 cron 設定（較穩定）  
+- 週末預設不跑  
+- **匯率沒有變化時不會重新發布**  
+- 也可在 GitHub → Actions 手動執行，或跑 `scripts/trigger_update.sh`
 
 ---
 

@@ -239,21 +239,29 @@ new_bytes = json.dumps(comparable, ensure_ascii=False, sort_keys=True).encode()
 
 ```yaml
 on:
-  schedule:
-    - cron: "10 1,2,3,4,5,6,7,8 * * 1-5"   # Taiwan 09:10–16:10
-    - cron: "30 10 * * 1-5"                 # Taiwan 18:30
-  workflow_dispatch:                        # manual
+  workflow_dispatch:                 # primary: external cron / manual
+  repository_dispatch:
+    types: [update-bot-rates]
+  schedule:                          # backup only (UTC)
+    - cron: "30 2,7,10 * * 1-5"     # Taiwan 10:30 / 15:30 / 18:30
 ```
 
-Cron is **UTC**. Taiwan = UTC+8.
+**Use an external cron as the primary trigger** (GitHub’s native schedule often skips).  
+Full setup: [SCHEDULING.en.md](./SCHEDULING.en.md).
+
+Local trigger:
+
+```bash
+./scripts/trigger_update.sh
+```
 
 ### 5.2 Changing the schedule
 
 | Need | Change |
 | --- | --- |
-| Once per weekday | Keep one cron, e.g. `"0 9 * * 1-5"` (17:00 Taiwan) |
-| Include weekends | Replace `1-5` with `*` |
-| More frequent | Expand hour list (watch Actions minutes + BOT load) |
+| Change primary times | Edit cron-job.org (or your crontab) |
+| Change GitHub backup | Edit `schedule.cron` (UTC) |
+| Manual only | Disable external cron; optionally remove `schedule` |
 
 ### 5.3 Job steps and edit points
 

@@ -16,6 +16,8 @@ FILES = [
     ("USER_GUIDE.en.md", "USER_GUIDE.en.pdf"),
     ("TECHNICAL.zh-TW.md", "TECHNICAL.zh-TW.pdf"),
     ("TECHNICAL.en.md", "TECHNICAL.en.pdf"),
+    ("SCHEDULING.zh-TW.md", "SCHEDULING.zh-TW.pdf"),
+    ("SCHEDULING.en.md", "SCHEDULING.en.pdf"),
     ("README.md", "Documentation-Index.pdf"),
 ]
 

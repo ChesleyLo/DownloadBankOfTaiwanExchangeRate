@@ -83,19 +83,21 @@ The authoritative currency list is whatever appears in the day’s `rates` / `by
 
 ## 4. How often is data refreshed?
 
-GitHub Actions runs on **weekdays only** (Taiwan time, UTC+8):
+**Primary trigger:** an external cron (e.g. cron-job.org) calling the GitHub API. Suggested Taiwan weekday times:
 
 | Window | Times |
 | --- | --- |
 | Business hours | 09:10, 10:10, 11:10, 12:10, 13:10, 14:10, 15:10, 16:10 |
 | Evening catch-up | 18:30 |
 
+**GitHub native backup (sparse):** 10:30, 15:30, 18:30 (weekdays)
+
 Notes:
 
-- No scheduled runs on weekends  
-- GitHub cron can be delayed by several minutes  
+- Follow [SCHEDULING.en.md](./SCHEDULING.en.md) to set up the external cron (more reliable than GitHub’s built-in schedule)  
+- No weekend runs by default  
 - **If rates did not change, nothing is republished**  
-- Engineers can also trigger the workflow manually in GitHub → Actions
+- You can also run from GitHub → Actions, or `scripts/trigger_update.sh`
 
 ---
 
