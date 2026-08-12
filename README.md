@@ -96,7 +96,8 @@ python3 scripts/download_bot_rates.py
 - `data/history/bot-xrt-YYYY-MM-DD.{csv,json}` — 歷史歸檔（**只保留最近 90 天**）  
 - `data/bot-xrt-latest.meta.txt` — checksum  
 
-排程：**以外部 cron 為主**（見 [docs/SCHEDULING.zh-TW.md](docs/SCHEDULING.zh-TW.md) / [docs/SCHEDULING.en.md](docs/SCHEDULING.en.md)）；GitHub 內建僅備援 10:30／15:30／18:30。  
+排程：**三層**（主要 cron-job.org 09:10–16:10 + 18:30；備援 GitHub 10:30／15:30／18:30）。  
+運維與故障排除見 [docs/SCHEDULING.zh-TW.md](docs/SCHEDULING.zh-TW.md)（含「排程沒啟動」逐步排查）。  
 NetSuite 腳本：`netsuite/DownloadBotRates_SS2.js`（設定步驟見使用文件）。
 
 ## 注意事項 Notes

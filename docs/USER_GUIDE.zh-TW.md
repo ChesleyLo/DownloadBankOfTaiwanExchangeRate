@@ -83,21 +83,20 @@ https://cdn.jsdelivr.net/gh/ChesleyLo/DownloadBankOfTaiwanExchangeRate@main/data
 
 ## 4. 資料多久更新一次？
 
-**主要觸發：** 外部排程（如 cron-job.org）呼叫 GitHub API，建議台灣時間平日：
+目前為**三層排程**（詳見 [SCHEDULING.zh-TW.md](./SCHEDULING.zh-TW.md)）：
 
-| 時段 | 時間 |
+| 層級 | 時間（台灣，平日） |
 | --- | --- |
-| 營業時段 | 09:10、10:10、11:10、12:10、13:10、14:10、15:10、16:10 |
-| 晚間補抓 | 18:30 |
-
-**GitHub 內建備援（較稀疏，僅防外部中斷）：** 10:30、15:30、18:30（平日）
+| **主要** cron-job.org | 09:10–16:10 每小時 + 18:30 |
+| **備援** GitHub cron | 10:30、15:30、18:30 |
+| **本機** Mac（可選） | 同上；Mac 需開機 |
 
 說明：
 
-- 請依 [SCHEDULING.zh-TW.md](./SCHEDULING.zh-TW.md) 完成外部 cron 設定（較穩定）  
+- **匯率沒有變化時不會重新 commit**（Actions 仍會跑）  
 - 週末預設不跑  
-- **匯率沒有變化時不會重新發布**  
-- 也可在 GitHub → Actions 手動執行，或跑 `scripts/trigger_update.sh`
+- 排程沒啟動時的排查步驟見 [SCHEDULING.zh-TW.md §0.2](./SCHEDULING.zh-TW.md#02-排程沒啟動時怎麼查逐步)  
+- 手動觸發：`./scripts/trigger_update.sh` 或 GitHub → Actions → Run workflow
 
 ---
 
@@ -182,11 +181,17 @@ https://github.com/ChesleyLo/DownloadBankOfTaiwanExchangeRate
 
 可能原因：
 
-1. 今日匯率尚未變動（系統不會無謂更新）  
-2. jsDelivr 快取尚未刷新（通常 Actions 成功後會 purge）  
-3. 可改打 GitHub Raw 備援網址確認最新內容
+1. 今日匯率尚未變動（系統不會無謂 commit）  
+2. jsDelivr 快取尚未刷新  
+3. **排程沒有觸發** → 見 [SCHEDULING.zh-TW.md §0.2](./SCHEDULING.zh-TW.md#02-排程沒啟動時怎麼查逐步)
 
-### Q3. NetSuite 下載失敗（HTTP 非 200）？
+### Q3. 排程好像沒在跑？
+
+先查 [GitHub Actions](https://github.com/ChesleyLo/DownloadBankOfTaiwanExchangeRate/actions) 是否有 `workflow_dispatch`。  
+若沒有，查 [cron-job.org History](https://console.cron-job.org/jobs) 是否 HTTP 204。  
+完整步驟：[SCHEDULING.zh-TW.md](./SCHEDULING.zh-TW.md)
+
+### Q4. NetSuite 下載失敗（HTTP 非 200）？
 
 檢查：
 
@@ -195,11 +200,11 @@ https://github.com/ChesleyLo/DownloadBankOfTaiwanExchangeRate
 3. Script Deployment 是否 Released  
 4. Execution Log 錯誤訊息
 
-### Q4. 可以直接給 NetSuite 台銀官方網址嗎？
+### Q5. 可以直接給 NetSuite 台銀官方網址嗎？
 
 **不建議。** 台銀有 bot 防護，NetSuite `N/https` 常會失敗。請一律使用本專案 CDN JSON。
 
-### Q5. 資料可不可以商用？
+### Q6. 資料可不可以商用？
 
 匯率來源為台灣銀行公開資訊；CDN 檔案為排程鏡像，可能有延遲。正式使用前請依貴公司合規要求確認，並標示資料來源。
 

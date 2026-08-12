@@ -83,21 +83,20 @@ The authoritative currency list is whatever appears in the day’s `rates` / `by
 
 ## 4. How often is data refreshed?
 
-**Primary trigger:** an external cron (e.g. cron-job.org) calling the GitHub API. Suggested Taiwan weekday times:
+Three layers (details: [SCHEDULING.en.md](./SCHEDULING.en.md)):
 
-| Window | Times |
+| Layer | Times (Taiwan, weekdays) |
 | --- | --- |
-| Business hours | 09:10, 10:10, 11:10, 12:10, 13:10, 14:10, 15:10, 16:10 |
-| Evening catch-up | 18:30 |
-
-**GitHub native backup (sparse):** 10:30, 15:30, 18:30 (weekdays)
+| **Primary** cron-job.org | hourly 09:10–16:10 + 18:30 |
+| **Backup** GitHub cron | 10:30, 15:30, 18:30 |
+| **Local** Mac (optional) | same; Mac must be on |
 
 Notes:
 
-- Follow [SCHEDULING.en.md](./SCHEDULING.en.md) to set up the external cron (more reliable than GitHub’s built-in schedule)  
+- **No commit when rates are unchanged** (workflow may still run)  
 - No weekend runs by default  
-- **If rates did not change, nothing is republished**  
-- You can also run from GitHub → Actions, or `scripts/trigger_update.sh`
+- If scheduling seems stuck, see [SCHEDULING.en.md §0.2](./SCHEDULING.en.md#02-schedule-not-running-step-by-step)  
+- Manual trigger: `./scripts/trigger_update.sh` or Actions → Run workflow
 
 ---
 
@@ -182,11 +181,17 @@ https://github.com/ChesleyLo/DownloadBankOfTaiwanExchangeRate
 
 Possible causes:
 
-1. Rates have not changed today (no republish)  
-2. jsDelivr cache not yet refreshed (Actions normally purges after updates)  
-3. Compare against the GitHub Raw fallback URL
+1. Rates have not changed today (no commit)  
+2. jsDelivr cache not refreshed  
+3. **Schedule did not trigger** → [SCHEDULING.en.md §0.2](./SCHEDULING.en.md#02-schedule-not-running-step-by-step)
 
-### Q3. NetSuite download fails (non-200)?
+### Q3. Schedule not running?
+
+Check [GitHub Actions](https://github.com/ChesleyLo/DownloadBankOfTaiwanExchangeRate/actions) for `workflow_dispatch`.  
+If missing, check [cron-job.org History](https://console.cron-job.org/jobs) for HTTP 204.  
+Full guide: [SCHEDULING.en.md](./SCHEDULING.en.md)
+
+### Q4. NetSuite download fails (non-200)?
 
 Check:
 
@@ -195,11 +200,11 @@ Check:
 3. Deployment is Released  
 4. Execution Log details
 
-### Q4. Can NetSuite call the BOT site directly?
+### Q5. Can NetSuite call the BOT site directly?
 
 **Not recommended.** BOT bot-protection often blocks `N/https`. Always use this project’s CDN JSON.
 
-### Q5. Can we use this commercially?
+### Q6. Can we use this commercially?
 
 Rates originate from Bank of Taiwan public data. The CDN copy is a scheduled mirror and may lag. Confirm compliance internally and cite the source.
 
