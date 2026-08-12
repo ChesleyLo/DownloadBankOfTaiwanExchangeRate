@@ -110,6 +110,70 @@ Logs: `/tmp/bot-fx-trigger.log`, `/tmp/bot-fx-trigger.stderr.log`
 
 ---
 
+## 0.5 How to confirm the schedule ran (day-to-day)
+
+Check in this order, **fastest first**:
+
+### ① GitHub Actions (~30 seconds, start here)
+
+Open: https://github.com/ChesleyLo/DownloadBankOfTaiwanExchangeRate/actions  
+
+Find **Update BOT FX Rates**:
+
+| What you see | Meaning |
+| --- | --- |
+| New `workflow_dispatch` with **green ✓** | Schedule triggered; run succeeded |
+| No new runs | Schedule may not have fired → go to ② |
+| Run exists but **red ✗** | Triggered but failed → open logs |
+
+### ② cron-job.org (confirm external cron hit GitHub)
+
+Open: https://console.cron-job.org/jobs  
+
+Open **BOT FX Rates - Business hours** or **Evening** → **History**:
+
+| HTTP | Meaning |
+| --- | --- |
+| **204** | Successfully dispatched GitHub workflow |
+| **401 / 403** | GitHub token expired → rerun `setup_cron_job.py` |
+| No entries | Job disabled, or not yet due |
+
+### ③ CDN JSON (check data timestamp)
+
+Open:
+
+https://cdn.jsdelivr.net/gh/ChesleyLo/DownloadBankOfTaiwanExchangeRate@main/data/bot-xrt-latest.json
+
+Check `fetchedAtUtc`:
+
+- **Recent** → data was fetched  
+- **Stale** → may not have run, or rates unchanged with no commit (confirm with ①)
+
+> `fetchedAtUtc` updates only when a **commit** is pushed. If Actions ran with `changed=false`, CDN time may stay old — **that is normal**.
+
+### ④ Manual test (when in doubt)
+
+```bash
+./scripts/trigger_update.sh
+```
+
+Or Actions → **Run workflow**
+
+| Outcome | Meaning |
+| --- | --- |
+| Manual OK, auto missing | cron-job.org issue, not the download script |
+| Manual also fails | inspect Actions logs |
+
+### ⑤ Weekly checklist
+
+- [ ] Weekday `workflow_dispatch` successes in Actions  
+- [ ] cron-job.org History shows **204**  
+- [ ] (optional) CDN `fetchedAtUtc` looks reasonable  
+
+Full triage when nothing runs: **§0.2**.
+
+---
+
 ## 1. Recommended external cron (cron-job.org, free)
 
 ### 1.1 Create a GitHub token

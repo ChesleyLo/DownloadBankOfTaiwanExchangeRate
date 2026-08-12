@@ -96,6 +96,7 @@ https://cdn.jsdelivr.net/gh/ChesleyLo/DownloadBankOfTaiwanExchangeRate@main/data
 - **匯率沒有變化時不會重新 commit**（Actions 仍會跑）  
 - 週末預設不跑  
 - 排程沒啟動時的排查步驟見 [SCHEDULING.zh-TW.md §0.2](./SCHEDULING.zh-TW.md#02-排程沒啟動時怎麼查逐步)  
+- **如何確認排程有執行**見 [SCHEDULING.zh-TW.md §0.5](./SCHEDULING.zh-TW.md#05-如何確認排程有無執行日常操作)  
 - 手動觸發：`./scripts/trigger_update.sh` 或 GitHub → Actions → Run workflow
 
 ---
@@ -185,11 +186,16 @@ https://github.com/ChesleyLo/DownloadBankOfTaiwanExchangeRate
 2. jsDelivr 快取尚未刷新  
 3. **排程沒有觸發** → 見 [SCHEDULING.zh-TW.md §0.2](./SCHEDULING.zh-TW.md#02-排程沒啟動時怎麼查逐步)
 
-### Q3. 排程好像沒在跑？
+### Q3. 排程好像沒在跑？／如何確認排程有執行？
 
-先查 [GitHub Actions](https://github.com/ChesleyLo/DownloadBankOfTaiwanExchangeRate/actions) 是否有 `workflow_dispatch`。  
-若沒有，查 [cron-job.org History](https://console.cron-job.org/jobs) 是否 HTTP 204。  
-完整步驟：[SCHEDULING.zh-TW.md](./SCHEDULING.zh-TW.md)
+**日常確認（由快到慢）：**
+
+1. [GitHub Actions](https://github.com/ChesleyLo/DownloadBankOfTaiwanExchangeRate/actions) 是否有 `workflow_dispatch` 且成功  
+2. [cron-job.org History](https://console.cron-job.org/jobs) 是否 HTTP **204**  
+3. [CDN JSON](https://cdn.jsdelivr.net/gh/ChesleyLo/DownloadBankOfTaiwanExchangeRate@main/data/bot-xrt-latest.json) 的 `fetchedAtUtc` 是否近期（匯率未變時可能不更新，屬正常）  
+4. 懷疑故障時執行 `./scripts/trigger_update.sh` 手動測試  
+
+完整說明與每週檢查清單：[SCHEDULING.zh-TW.md §0.5](./SCHEDULING.zh-TW.md#05-如何確認排程有無執行日常操作)
 
 ### Q4. NetSuite 下載失敗（HTTP 非 200）？
 

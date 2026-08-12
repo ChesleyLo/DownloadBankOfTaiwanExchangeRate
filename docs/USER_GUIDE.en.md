@@ -96,6 +96,7 @@ Notes:
 - **No commit when rates are unchanged** (workflow may still run)  
 - No weekend runs by default  
 - If scheduling seems stuck, see [SCHEDULING.en.md §0.2](./SCHEDULING.en.md#02-schedule-not-running-step-by-step)  
+- **How to confirm runs** see [SCHEDULING.en.md §0.5](./SCHEDULING.en.md#05-how-to-confirm-the-schedule-ran-day-to-day)  
 - Manual trigger: `./scripts/trigger_update.sh` or Actions → Run workflow
 
 ---
@@ -185,11 +186,16 @@ Possible causes:
 2. jsDelivr cache not refreshed  
 3. **Schedule did not trigger** → [SCHEDULING.en.md §0.2](./SCHEDULING.en.md#02-schedule-not-running-step-by-step)
 
-### Q3. Schedule not running?
+### Q3. Schedule not running? / How to confirm it ran?
 
-Check [GitHub Actions](https://github.com/ChesleyLo/DownloadBankOfTaiwanExchangeRate/actions) for `workflow_dispatch`.  
-If missing, check [cron-job.org History](https://console.cron-job.org/jobs) for HTTP 204.  
-Full guide: [SCHEDULING.en.md](./SCHEDULING.en.md)
+**Day-to-day checks (fastest first):**
+
+1. [GitHub Actions](https://github.com/ChesleyLo/DownloadBankOfTaiwanExchangeRate/actions) — look for successful `workflow_dispatch`  
+2. [cron-job.org History](https://console.cron-job.org/jobs) — HTTP **204**  
+3. [CDN JSON](https://cdn.jsdelivr.net/gh/ChesleyLo/DownloadBankOfTaiwanExchangeRate@main/data/bot-xrt-latest.json) — `fetchedAtUtc` (may stay old if rates unchanged)  
+4. Run `./scripts/trigger_update.sh` if you suspect a failure  
+
+Full guide and weekly checklist: [SCHEDULING.en.md §0.5](./SCHEDULING.en.md#05-how-to-confirm-the-schedule-ran-day-to-day)
 
 ### Q4. NetSuite download fails (non-200)?
 

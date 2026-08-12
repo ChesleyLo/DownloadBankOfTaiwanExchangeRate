@@ -114,6 +114,70 @@ cron-job.org 暫時異常、且 Mac 常開時：
 
 ---
 
+## 0.5 如何確認排程有無執行？（日常操作）
+
+之後要確認排程是否正常，**建議由快到慢**依序檢查：
+
+### ① 看 GitHub Actions（約 30 秒，最優先）
+
+開啟：https://github.com/ChesleyLo/DownloadBankOfTaiwanExchangeRate/actions  
+
+找 **Update BOT FX Rates**：
+
+| 看到什麼 | 代表什麼 |
+| --- | --- |
+| 有新的 `workflow_dispatch` 且 **綠色 ✓** | 排程有觸發，流程成功 |
+| 完全沒有新的 run | 排程可能沒觸發 → 繼續 ② |
+| 有 run 但是 **紅色 ✗** | 有觸發但失敗 → 點進 log 看錯誤 |
+
+### ② 看 cron-job.org（確認外部 cron 有打 GitHub）
+
+開啟：https://console.cron-job.org/jobs  
+
+點 **BOT FX Rates - Business hours** 或 **Evening** → **History**：
+
+| HTTP 結果 | 代表什麼 |
+| --- | --- |
+| **204** | 有成功呼叫 GitHub 觸發 workflow |
+| **401 / 403** | GitHub Token 失效 → 重跑 `setup_cron_job.py` |
+| 沒有紀錄 | Job 被停用，或時間還沒到 |
+
+### ③ 看 CDN JSON（確認資料時間）
+
+開啟：
+
+https://cdn.jsdelivr.net/gh/ChesleyLo/DownloadBankOfTaiwanExchangeRate@main/data/bot-xrt-latest.json
+
+看 `fetchedAtUtc` 欄位：
+
+- **時間是最近** → 有抓到資料  
+- **時間很舊** → 可能沒跑，或匯率沒變所以沒 commit（需搭配 ① 確認）
+
+> `fetchedAtUtc` 只有在 **有 commit 更新** 時才會變。若 Actions 有跑但匯率未變（`changed=false`），CDN 時間可能維持舊值，**這是正常的**。
+
+### ④ 手動驗證（懷疑壞掉時）
+
+```bash
+./scripts/trigger_update.sh
+```
+
+或 GitHub → Actions → **Run workflow**
+
+| 結果 | 代表什麼 |
+| --- | --- |
+| 手動成功、自動沒跑 | 問題在 cron-job.org，不是下載腳本 |
+| 手動也失敗 | 看 Actions log 錯誤訊息 |
+
+### ⑤ 每週例行檢查清單（勾選即可）
+
+- [ ] Actions 平日有 `workflow_dispatch` 成功  
+- [ ] cron-job.org History 有 **204**  
+- [ ] （可選）CDN JSON 的 `fetchedAtUtc` 合理  
+
+排程沒跑時的完整排查：見 **§0.2**。
+
+---
+
 ## 1. 建議的外部排程（cron-job.org，免費）
 
 ### 1.1 建立 GitHub Token

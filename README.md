@@ -97,7 +97,7 @@ python3 scripts/download_bot_rates.py
 - `data/bot-xrt-latest.meta.txt` — checksum  
 
 排程：**三層**（主要 cron-job.org 09:10–16:10 + 18:30；備援 GitHub 10:30／15:30／18:30）。  
-運維與故障排除見 [docs/SCHEDULING.zh-TW.md](docs/SCHEDULING.zh-TW.md)（含「排程沒啟動」逐步排查）。  
+運維、**如何確認排程有執行**、故障排除見 [docs/SCHEDULING.zh-TW.md](docs/SCHEDULING.zh-TW.md)（§0.5）。  
 NetSuite 腳本：`netsuite/DownloadBotRates_SS2.js`（設定步驟見使用文件）。
 
 ## 注意事項 Notes
