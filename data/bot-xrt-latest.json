@@ -2,7 +2,7 @@
   "source": "Bank of Taiwan",
   "sourceUrl": "https://rate.bot.com.tw/xrt/flcsv/0/day",
   "base": "TWD",
-  "fetchedAtUtc": "2026-08-17T10:37:09.384767+00:00",
+  "fetchedAtUtc": "2026-08-17T10:57:14.264741+00:00",
   "rateCount": 19,
   "rates": [
     {
@@ -194,12 +194,12 @@
     {
       "currency": "CHF",
       "cash": {
-        "buy": 38.5,
-        "sell": 39.7
+        "buy": 38.47,
+        "sell": 39.67
       },
       "spot": {
-        "buy": 39.11,
-        "sell": 39.5
+        "buy": 39.08,
+        "sell": 39.47
       },
       "forward": {
         "buy": {
@@ -442,12 +442,12 @@
     {
       "currency": "EUR",
       "cash": {
-        "buy": 36.11,
-        "sell": 37.45
+        "buy": 36.08,
+        "sell": 37.42
       },
       "spot": {
-        "buy": 36.625,
-        "sell": 37.225
+        "buy": 36.595,
+        "sell": 37.195
       },
       "forward": {
         "buy": {
@@ -535,8 +535,8 @@
     {
       "currency": "MYR",
       "cash": {
-        "buy": 6.812,
-        "sell": 8.337
+        "buy": 6.808,
+        "sell": 8.333
       },
       "spot": {
         "buy": null,
@@ -785,12 +785,12 @@
     "CHF": {
       "currency": "CHF",
       "cash": {
-        "buy": 38.5,
-        "sell": 39.7
+        "buy": 38.47,
+        "sell": 39.67
       },
       "spot": {
-        "buy": 39.11,
-        "sell": 39.5
+        "buy": 39.08,
+        "sell": 39.47
       },
       "forward": {
         "buy": {
@@ -1033,12 +1033,12 @@
     "EUR": {
       "currency": "EUR",
       "cash": {
-        "buy": 36.11,
-        "sell": 37.45
+        "buy": 36.08,
+        "sell": 37.42
       },
       "spot": {
-        "buy": 36.625,
-        "sell": 37.225
+        "buy": 36.595,
+        "sell": 37.195
       },
       "forward": {
         "buy": {
@@ -1126,8 +1126,8 @@
     "MYR": {
       "currency": "MYR",
       "cash": {
-        "buy": 6.812,
-        "sell": 8.337
+        "buy": 6.808,
+        "sell": 8.333
       },
       "spot": {
         "buy": null,
