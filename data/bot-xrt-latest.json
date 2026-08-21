@@ -2,7 +2,7 @@
   "source": "Bank of Taiwan",
   "sourceUrl": "https://rate.bot.com.tw/xrt/flcsv/0/day",
   "base": "TWD",
-  "fetchedAtUtc": "2026-08-21T10:35:07.804332+00:00",
+  "fetchedAtUtc": "2026-08-21T10:58:02.162570+00:00",
   "rateCount": 19,
   "rates": [
     {
@@ -132,12 +132,12 @@
     {
       "currency": "CAD",
       "cash": {
-        "buy": 22.68,
-        "sell": 23.59
+        "buy": 22.7,
+        "sell": 23.61
       },
       "spot": {
-        "buy": 23.01,
-        "sell": 23.34
+        "buy": 23.03,
+        "sell": 23.36
       },
       "forward": {
         "buy": {
@@ -723,12 +723,12 @@
     "CAD": {
       "currency": "CAD",
       "cash": {
-        "buy": 22.68,
-        "sell": 23.59
+        "buy": 22.7,
+        "sell": 23.61
       },
       "spot": {
-        "buy": 23.01,
-        "sell": 23.34
+        "buy": 23.03,
+        "sell": 23.36
       },
       "forward": {
         "buy": {
