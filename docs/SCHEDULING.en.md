@@ -112,6 +112,12 @@ Logs: `/tmp/bot-fx-trigger.log`, `/tmp/bot-fx-trigger.stderr.log`
 
 ## 0.5 How to confirm the schedule ran (day-to-day)
 
+**Records dashboard (filter by date):** open [`web/index.html`](../web/index.html) locally, or after push:
+
+https://cdn.jsdelivr.net/gh/ChesleyLo/DownloadBankOfTaiwanExchangeRate@main/web/index.html
+
+The page lists GitHub Actions success/failure and the rate snapshot for a date. cron-job.org History still requires a login.
+
 Check in this order, **fastest first**:
 
 ### ① GitHub Actions (~30 seconds, start here)

@@ -1,0 +1,48 @@
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 */
+/* Hallmark · macrostructure: Index-First · tone: utilitarian · theme: Cobalt
+ * audience: ops · use: filter schedule + rate records by date
+ * nav: N9 edge-aligned · footer: Ft2 compact strip · enrichment: none
+ * paper-band: light · display-style: grotesk-sans · accent-hue: cool
+ */
+:root {
+  --color-paper: oklch(99.2% 0.004 250);
+  --color-paper-2: oklch(97.1% 0.008 250);
+  --color-paper-3: oklch(94.4% 0.012 250);
+  --color-ink: oklch(22% 0.03 260);
+  --color-ink-2: oklch(38% 0.02 260);
+  --color-ink-3: oklch(52% 0.016 260);
+  --color-rule: oklch(88% 0.012 250);
+  --color-accent: oklch(48% 0.16 260);
+  --color-accent-ink: oklch(99% 0.01 250);
+  --color-success: oklch(42% 0.1 145);
+  --color-success-bg: oklch(95% 0.03 145);
+  --color-danger: oklch(48% 0.14 25);
+  --color-danger-bg: oklch(96% 0.03 25);
+  --color-warn: oklch(48% 0.1 80);
+  --color-warn-bg: oklch(96% 0.04 80);
+  --color-muted-bg: oklch(94% 0.01 250);
+  --color-focus: oklch(48% 0.16 260);
+  --font-display: "IBM Plex Sans", "Source Sans 3", "Noto Sans TC", sans-serif;
+  --font-body: "IBM Plex Sans", "Source Sans 3", "Noto Sans TC", sans-serif;
+  --font-mono: "IBM Plex Mono", "ui-monospace", monospace;
+  --text-display: 1.75rem;
+  --text-xl: 1.25rem;
+  --text-lg: 1.0625rem;
+  --text-md: 0.9375rem;
+  --text-sm: 0.8125rem;
+  --text-xs: 0.75rem;
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --radius: 6px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 120ms;
+  --dur-med: 180ms;
+  --measure: 68ch;
+}

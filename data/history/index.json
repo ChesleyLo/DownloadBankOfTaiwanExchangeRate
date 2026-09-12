@@ -1,0 +1,70 @@
+{
+  "retentionDays": 90,
+  "dates": [
+    {
+      "date": "2026-08-27",
+      "json": "bot-xrt-2026-08-27.json",
+      "csv": "bot-xrt-2026-08-27.csv"
+    },
+    {
+      "date": "2026-08-26",
+      "json": "bot-xrt-2026-08-26.json",
+      "csv": "bot-xrt-2026-08-26.csv"
+    },
+    {
+      "date": "2026-08-25",
+      "json": "bot-xrt-2026-08-25.json",
+      "csv": "bot-xrt-2026-08-25.csv"
+    },
+    {
+      "date": "2026-08-24",
+      "json": "bot-xrt-2026-08-24.json",
+      "csv": "bot-xrt-2026-08-24.csv"
+    },
+    {
+      "date": "2026-08-21",
+      "json": "bot-xrt-2026-08-21.json",
+      "csv": "bot-xrt-2026-08-21.csv"
+    },
+    {
+      "date": "2026-08-20",
+      "json": "bot-xrt-2026-08-20.json",
+      "csv": "bot-xrt-2026-08-20.csv"
+    },
+    {
+      "date": "2026-08-19",
+      "json": "bot-xrt-2026-08-19.json",
+      "csv": "bot-xrt-2026-08-19.csv"
+    },
+    {
+      "date": "2026-08-18",
+      "json": "bot-xrt-2026-08-18.json",
+      "csv": "bot-xrt-2026-08-18.csv"
+    },
+    {
+      "date": "2026-08-17",
+      "json": "bot-xrt-2026-08-17.json",
+      "csv": "bot-xrt-2026-08-17.csv"
+    },
+    {
+      "date": "2026-08-14",
+      "json": "bot-xrt-2026-08-14.json",
+      "csv": "bot-xrt-2026-08-14.csv"
+    },
+    {
+      "date": "2026-08-13",
+      "json": "bot-xrt-2026-08-13.json",
+      "csv": "bot-xrt-2026-08-13.csv"
+    },
+    {
+      "date": "2026-08-12",
+      "json": "bot-xrt-2026-08-12.json",
+      "csv": "bot-xrt-2026-08-12.csv"
+    },
+    {
+      "date": "2026-08-11",
+      "json": "bot-xrt-2026-08-11.json",
+      "csv": "bot-xrt-2026-08-11.csv"
+    }
+  ]
+}

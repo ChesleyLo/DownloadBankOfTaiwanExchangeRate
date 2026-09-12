@@ -185,6 +185,33 @@ def prune_history(data_dir: Path, retention_days: int, today: datetime | None = 
     return deleted
 
 
+def write_history_index(data_dir: Path, retention_days: int) -> bool:
+    """Write data/history/index.json for the dashboard date picker."""
+    root = history_dir(data_dir)
+    root.mkdir(parents=True, exist_ok=True)
+    dates: dict[str, dict[str, str]] = {}
+    for path in sorted(root.glob("bot-xrt-*.*")):
+        match = HISTORY_NAME_RE.match(path.name)
+        if not match:
+            continue
+        day, ext = match.group(1), match.group(2)
+        dates.setdefault(day, {})[ext] = path.name
+    payload = {
+        "retentionDays": retention_days,
+        "dates": [
+            {
+                "date": day,
+                "json": info.get("json"),
+                "csv": info.get("csv"),
+            }
+            for day, info in sorted(dates.items(), reverse=True)
+        ],
+    }
+    dest = root / "index.json"
+    text = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+    return _write_if_changed(dest, text.encode("utf-8"))
+
+
 def write_outputs(
     content: bytes,
     latest_csv: Path,
@@ -218,6 +245,7 @@ def write_outputs(
             archive_json.write_bytes(json_bytes)
 
     deleted = prune_history(data_dir, retention_days=retention_days)
+    index_changed = write_history_index(data_dir, retention_days)
 
     meta_path = latest_csv.parent / "bot-xrt-latest.meta.txt"
     meta_path.write_text(
@@ -242,7 +270,7 @@ def write_outputs(
     )
 
     return {
-        "changed": changed or bool(migrated) or bool(deleted),
+        "changed": changed or bool(migrated) or bool(deleted) or index_changed,
         "latest_csv": latest_csv,
         "latest_json": latest_json,
         "archive_csv": archive_csv if archive else None,

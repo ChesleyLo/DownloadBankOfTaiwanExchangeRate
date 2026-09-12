@@ -116,6 +116,12 @@ cron-job.org 暫時異常、且 Mac 常開時：
 
 ## 0.5 如何確認排程有無執行？（日常操作）
 
+**紀錄儀表板（可依日期篩選）：** 本機開啟 [`web/index.html`](../web/index.html)，或 push 後用：
+
+https://cdn.jsdelivr.net/gh/ChesleyLo/DownloadBankOfTaiwanExchangeRate@main/web/index.html
+
+頁面會列出 GitHub Actions 成功／失敗，以及當日匯率快照。cron-job.org History 仍需登入該網站查看。
+
 之後要確認排程是否正常，**建議由快到慢**依序檢查：
 
 ### ① 看 GitHub Actions（約 30 秒，最優先）

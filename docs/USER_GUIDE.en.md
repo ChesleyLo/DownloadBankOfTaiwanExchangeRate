@@ -97,6 +97,7 @@ Notes:
 - No weekend runs by default  
 - If scheduling seems stuck, see [SCHEDULING.en.md §0.2](./SCHEDULING.en.md#02-schedule-not-running-step-by-step)  
 - **How to confirm runs** see [SCHEDULING.en.md §0.5](./SCHEDULING.en.md#05-how-to-confirm-the-schedule-ran-day-to-day)  
+- **Records dashboard (filter by date):** [`web/index.html`](../web/index.html)  
 - Manual trigger: `./scripts/trigger_update.sh` or Actions → Run workflow
 
 ---

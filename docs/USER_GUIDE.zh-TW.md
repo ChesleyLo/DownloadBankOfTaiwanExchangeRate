@@ -97,6 +97,7 @@ https://cdn.jsdelivr.net/gh/ChesleyLo/DownloadBankOfTaiwanExchangeRate@main/data
 - 週末預設不跑  
 - 排程沒啟動時的排查步驟見 [SCHEDULING.zh-TW.md §0.2](./SCHEDULING.zh-TW.md#02-排程沒啟動時怎麼查逐步)  
 - **如何確認排程有執行**見 [SCHEDULING.zh-TW.md §0.5](./SCHEDULING.zh-TW.md#05-如何確認排程有無執行日常操作)  
+- **紀錄儀表板（依日期篩選）：** [`web/index.html`](../web/index.html)  
 - 手動觸發：`./scripts/trigger_update.sh` 或 GitHub → Actions → Run workflow
 
 ---
