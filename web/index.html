@@ -321,6 +321,14 @@
         background: var(--color-paper-2);
       }
 
+      tbody tr.row-missing {
+        background: var(--color-danger-bg);
+      }
+
+      tbody tr.row-weekend {
+        color: var(--color-ink-3);
+      }
+
       .pill {
         display: inline-block;
         padding: 0 var(--space-xs);
@@ -444,8 +452,8 @@
     <section class="intro">
       <h1>排程與匯率紀錄</h1>
       <p>
-        左側是 GitHub Actions 每次下載的成功或失敗；右側是該日已歸檔的匯率快照。
-        時間以台灣時區顯示。cron-job.org 需登入查看，不在此頁。
+        預設顯示每個日期「最後一筆成功」的台灣時間；也可改看全部執行明細，或只看缺成功的平日。
+        右側是該日匯率快照。cron-job.org 需登入查看，不在此頁。
       </p>
     </section>
 
@@ -459,12 +467,11 @@
         <input id="to-date" type="date" required />
       </label>
       <label class="field">
-        <span>執行結果</span>
-        <select id="status-filter">
-          <option value="all">全部</option>
-          <option value="success">成功</option>
-          <option value="failure">失敗</option>
-          <option value="other">其他（執行中／取消）</option>
+        <span>顯示條件</span>
+        <select id="view-filter">
+          <option value="daily">每日最後成功</option>
+          <option value="missing">僅缺成功的平日</option>
+          <option value="runs">全部執行明細</option>
         </select>
       </label>
       <div class="field">
@@ -489,15 +496,15 @@
     <section class="stats" aria-label="篩選結果摘要">
       <div class="stat">
         <b id="stat-runs">0</b>
-        <span>排程執行</span>
+        <span id="stat-runs-label">列出天數</span>
       </div>
       <div class="stat">
         <b id="stat-ok">0</b>
-        <span>成功</span>
+        <span id="stat-ok-label">有最後成功</span>
       </div>
       <div class="stat">
         <b id="stat-fail">0</b>
-        <span>失敗</span>
+        <span id="stat-fail-label">平日缺成功</span>
       </div>
       <div class="stat">
         <b id="stat-snaps">0</b>
@@ -507,16 +514,17 @@
 
     <main class="workbench">
       <section>
-        <h2>排程執行</h2>
-        <p class="lede">點列可對到該日匯率。點「開啟 log」看 GitHub 詳細紀錄。</p>
+        <h2 id="run-heading">每日最後成功</h2>
+        <p id="run-lede" class="lede">每一列是該日最後一筆成功下載。點列可對到右側匯率。</p>
         <div class="table-wrap">
           <table>
-            <thead>
+            <thead id="run-head">
               <tr>
-                <th>台灣時間</th>
-                <th>結果</th>
+                <th>日期</th>
+                <th>星期</th>
+                <th>最後成功（台灣）</th>
                 <th>觸發來源</th>
-                <th>Run</th>
+                <th>當日成功</th>
                 <th>詳細</th>
               </tr>
             </thead>

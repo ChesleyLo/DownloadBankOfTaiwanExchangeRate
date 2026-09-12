@@ -10,7 +10,7 @@ const MAX_RUN_PAGES = 5;
 const els = {
   from: document.getElementById("from-date"),
   to: document.getElementById("to-date"),
-  status: document.getElementById("status-filter"),
+  view: document.getElementById("view-filter"),
   apply: document.getElementById("apply-filter"),
   reset: document.getElementById("reset-filter"),
   banner: document.getElementById("load-banner"),
@@ -18,6 +18,12 @@ const els = {
   okCount: document.getElementById("stat-ok"),
   failCount: document.getElementById("stat-fail"),
   snapCount: document.getElementById("stat-snaps"),
+  runLabel: document.getElementById("stat-runs-label"),
+  okLabel: document.getElementById("stat-ok-label"),
+  failLabel: document.getElementById("stat-fail-label"),
+  runHeading: document.getElementById("run-heading"),
+  runLede: document.getElementById("run-lede"),
+  runHead: document.getElementById("run-head"),
   runBody: document.getElementById("run-body"),
   snapList: document.getElementById("snap-list"),
   rateMeta: document.getElementById("rate-meta"),
@@ -82,10 +88,11 @@ function setBusy(isBusy) {
 function readParams() {
   const params = new URLSearchParams(window.location.search);
   const today = todayTaipei();
+  const view = params.get("view") || params.get("status") || "daily";
   return {
     from: params.get("from") || shiftDays(today, -29),
     to: params.get("to") || today,
-    status: params.get("status") || "all",
+    view: ["daily", "missing", "runs"].includes(view) ? view : "daily",
     date: params.get("date") || "",
   };
 }
@@ -94,7 +101,7 @@ function writeParams(next) {
   const params = new URLSearchParams();
   params.set("from", next.from);
   params.set("to", next.to);
-  if (next.status && next.status !== "all") params.set("status", next.status);
+  if (next.view && next.view !== "daily") params.set("view", next.view);
   if (next.date) params.set("date", next.date);
   const query = params.toString();
   history.replaceState(null, "", query ? `?${query}` : location.pathname);
@@ -135,6 +142,74 @@ function runStatus(run) {
 
 function inRange(isoDate, from, to) {
   return isoDate >= from && isoDate <= to;
+}
+
+function eachDate(from, to) {
+  const days = [];
+  for (let cursor = from; cursor <= to; cursor = shiftDays(cursor, 1)) {
+    days.push(cursor);
+  }
+  return days;
+}
+
+function weekdayOf(isoDate) {
+  return new Date(`${isoDate}T12:00:00+08:00`).getDay();
+}
+
+function isWeekend(isoDate) {
+  const day = weekdayOf(isoDate);
+  return day === 0 || day === 6;
+}
+
+function weekdayLabel(isoDate) {
+  return new Intl.DateTimeFormat("zh-TW", {
+    timeZone: TZ,
+    weekday: "short",
+  }).format(new Date(`${isoDate}T12:00:00+08:00`));
+}
+
+function runFinishedAt(run) {
+  return run.updated_at || run.created_at;
+}
+
+function lastSuccessByDay(runs) {
+  const latest = new Map();
+  const counts = new Map();
+  for (const run of runs) {
+    const day = taipeiDate(run.created_at);
+    const rec = counts.get(day) || { success: 0, failure: 0 };
+    const status = runStatus(run).key;
+    if (status === "success") rec.success += 1;
+    if (status === "failure") rec.failure += 1;
+    counts.set(day, rec);
+    if (status !== "success") continue;
+    const prev = latest.get(day);
+    if (!prev || new Date(runFinishedAt(run)) > new Date(runFinishedAt(prev))) {
+      latest.set(day, run);
+    }
+  }
+  return { latest, counts };
+}
+
+function dailyRows() {
+  const { from, to, view } = currentFilter();
+  const { latest, counts } = lastSuccessByDay(state.runs);
+  return eachDate(from, to)
+    .map((date) => {
+      const run = latest.get(date) || null;
+      const count = counts.get(date) || { success: 0, failure: 0 };
+      const weekend = isWeekend(date);
+      return {
+        date,
+        weekday: weekdayLabel(date),
+        weekend,
+        run,
+        successCount: count.success,
+        failureCount: count.failure,
+        missing: !weekend && !run,
+      };
+    })
+    .filter((row) => (view === "missing" ? row.missing : true));
 }
 
 async function fetchFirstOk(urls) {
@@ -187,23 +262,14 @@ function currentFilter() {
   return {
     from: els.from.value,
     to: els.to.value,
-    status: els.status.value,
+    view: els.view.value,
     date: state.selectedDate,
   };
 }
 
 function filteredRuns() {
-  const { from, to, status } = currentFilter();
-  return state.runs.filter((run) => {
-    const day = taipeiDate(run.created_at);
-    if (!inRange(day, from, to)) return false;
-    const { key } = runStatus(run);
-    if (status === "all") return true;
-    if (status === "success") return key === "success";
-    if (status === "failure") return key === "failure";
-    if (status === "other") return key !== "success" && key !== "failure";
-    return true;
-  });
+  const { from, to } = currentFilter();
+  return state.runs.filter((run) => inRange(taipeiDate(run.created_at), from, to));
 }
 
 function filteredSnaps() {
@@ -211,16 +277,110 @@ function filteredSnaps() {
   return state.snaps.filter((item) => inRange(item.date, from, to));
 }
 
-function renderStats(runs, snaps) {
-  els.runCount.textContent = String(runs.length);
-  els.okCount.textContent = String(runs.filter((run) => runStatus(run).key === "success").length);
-  els.failCount.textContent = String(runs.filter((run) => runStatus(run).key === "failure").length);
+function renderStats(snaps) {
+  const view = els.view.value;
+  if (view === "runs") {
+    const runs = filteredRuns();
+    els.runLabel.textContent = "排程執行";
+    els.okLabel.textContent = "成功";
+    els.failLabel.textContent = "失敗";
+    els.runCount.textContent = String(runs.length);
+    els.okCount.textContent = String(runs.filter((run) => runStatus(run).key === "success").length);
+    els.failCount.textContent = String(runs.filter((run) => runStatus(run).key === "failure").length);
+  } else {
+    const rows = dailyRows();
+    const allDays = lastSuccessByDay(state.runs);
+    const calendar = eachDate(els.from.value, els.to.value);
+    const withSuccess = calendar.filter((date) => allDays.latest.has(date)).length;
+    const missingWeekdays = calendar.filter((date) => !isWeekend(date) && !allDays.latest.has(date)).length;
+    els.runLabel.textContent = view === "missing" ? "缺成功平日" : "列出天數";
+    els.okLabel.textContent = "有最後成功";
+    els.failLabel.textContent = "平日缺成功";
+    els.runCount.textContent = String(rows.length);
+    els.okCount.textContent = String(withSuccess);
+    els.failCount.textContent = String(missingWeekdays);
+  }
   els.snapCount.textContent = String(snaps.length);
+}
+
+function setRunTableChrome(view) {
+  if (view === "runs") {
+    els.runHeading.textContent = "全部執行明細";
+    els.runLede.textContent = "同一天可能有多次成功與失敗。點列可對到該日匯率。";
+    els.runHead.innerHTML = `
+      <tr>
+        <th>台灣時間</th>
+        <th>結果</th>
+        <th>觸發來源</th>
+        <th>Run</th>
+        <th>詳細</th>
+      </tr>
+    `;
+    return;
+  }
+  els.runHeading.textContent = view === "missing" ? "缺成功的平日" : "每日最後成功";
+  els.runLede.textContent =
+    view === "missing"
+      ? "這些平日沒有任何成功的下載。週末預設不跑，不會列在這裡。"
+      : "每一列是該日最後一筆成功下載的完成時間（台灣）。點列可對到右側匯率。";
+  els.runHead.innerHTML = `
+    <tr>
+      <th>日期</th>
+      <th>星期</th>
+      <th>最後成功（台灣）</th>
+      <th>觸發來源</th>
+      <th>當日成功</th>
+      <th>詳細</th>
+    </tr>
+  `;
+}
+
+function renderDailyRows() {
+  const rows = dailyRows();
+  els.runBody.replaceChildren();
+  els.emptyRuns.hidden = rows.length > 0;
+  els.emptyRuns.textContent =
+    els.view.value === "missing"
+      ? "這個範圍的平日都有最後一筆成功紀錄。"
+      : "這個日期範圍沒有可列出的日期。";
+  for (const row of rows) {
+    const tr = document.createElement("tr");
+    if (row.missing) tr.classList.add("row-missing");
+    if (row.weekend) tr.classList.add("row-weekend");
+    const time = row.run
+      ? `<time datetime="${runFinishedAt(row.run)}">${taipeiDateTime(runFinishedAt(row.run))}</time>`
+      : row.weekend
+        ? "—"
+        : "無成功";
+    const source = row.run ? eventLabel(row.run.event) : row.weekend ? "週末不排程" : "—";
+    const link = row.run
+      ? `<a class="row-link" href="${row.run.html_url}" target="_blank" rel="noreferrer">開啟 log</a>`
+      : "—";
+    const badge = row.run
+      ? `<span class="pill pill-success">${row.successCount}</span>`
+      : row.weekend
+        ? "—"
+        : `<span class="pill pill-failure">0</span>`;
+    tr.innerHTML = `
+      <td class="num">${row.date}</td>
+      <td>${row.weekday}</td>
+      <td>${time}</td>
+      <td>${source}</td>
+      <td>${badge}</td>
+      <td>${link}</td>
+    `;
+    tr.addEventListener("click", (event) => {
+      if (event.target.closest("a")) return;
+      selectDate(row.date);
+    });
+    els.runBody.appendChild(tr);
+  }
 }
 
 function renderRuns(runs) {
   els.runBody.replaceChildren();
   els.emptyRuns.hidden = runs.length > 0;
+  els.emptyRuns.textContent = "這個日期範圍沒有排程執行紀錄。";
   for (const run of runs) {
     const status = runStatus(run);
     const row = document.createElement("tr");
@@ -317,10 +477,12 @@ async function loadRates(date) {
 }
 
 function renderAll() {
-  const runs = filteredRuns();
+  const view = els.view.value;
   const snaps = filteredSnaps();
-  renderStats(runs, snaps);
-  renderRuns(runs);
+  setRunTableChrome(view);
+  renderStats(snaps);
+  if (view === "runs") renderRuns(filteredRuns());
+  else renderDailyRows();
   renderSnapList(snaps);
 }
 
@@ -331,12 +493,33 @@ async function selectDate(date) {
   await loadRates(date);
 }
 
-function summarizeBanner(runs) {
-  const failCount = runs.filter((run) => runStatus(run).key === "failure").length;
-  const text = failCount
-    ? `這個範圍有 ${runs.length} 筆排程執行，其中 ${failCount} 筆失敗。時間皆為台灣時區。`
-    : `這個範圍有 ${runs.length} 筆排程執行。時間皆為台灣時區。`;
-  setBanner(text, failCount ? "warn" : "success");
+function summarizeBanner() {
+  const { latest } = lastSuccessByDay(state.runs);
+  const calendar = eachDate(els.from.value, els.to.value);
+  const missing = calendar.filter((date) => !isWeekend(date) && !latest.has(date)).length;
+  const newest = calendar.filter((date) => latest.has(date)).at(-1);
+  const newestTime = newest ? taipeiDateTime(runFinishedAt(latest.get(newest))) : "";
+  if (els.view.value === "runs") {
+    const runs = filteredRuns();
+    const failCount = runs.filter((run) => runStatus(run).key === "failure").length;
+    setBanner(
+      failCount
+        ? `這個範圍有 ${runs.length} 筆排程執行，其中 ${failCount} 筆失敗。時間皆為台灣時區。`
+        : `這個範圍有 ${runs.length} 筆排程執行。時間皆為台灣時區。`,
+      failCount ? "warn" : "success"
+    );
+    return;
+  }
+  if (missing) {
+    setBanner(`有 ${missing} 個平日沒有成功紀錄。時間皆為台灣時區。`, "warn");
+    return;
+  }
+  setBanner(
+    newestTime
+      ? `這個範圍的平日都有最後成功。最近一筆是 ${newestTime}。`
+      : "這個範圍沒有平日成功紀錄。",
+    newestTime ? "success" : "info"
+  );
 }
 
 async function applyFilter() {
@@ -354,9 +537,8 @@ async function applyFilter() {
       state.selectedDate = snaps[0]?.date || "";
     }
     writeParams(currentFilter());
-    const runs = filteredRuns();
     renderAll();
-    summarizeBanner(runs);
+    summarizeBanner();
     await loadRates(state.selectedDate);
   } catch (error) {
     setBanner(error.message || "載入失敗。請稍後再試。", "danger");
@@ -369,7 +551,7 @@ async function boot() {
   const initial = readParams();
   els.from.value = initial.from;
   els.to.value = initial.to;
-  els.status.value = initial.status;
+  els.view.value = initial.view;
   state.selectedDate = initial.date;
   setBusy(true);
   setBanner("載入 GitHub Actions 與歷史匯率…", "info");
@@ -380,9 +562,8 @@ async function boot() {
       state.selectedDate = snaps[0]?.date || "";
     }
     writeParams(currentFilter());
-    const runs = filteredRuns();
     renderAll();
-    summarizeBanner(runs);
+    summarizeBanner();
     await loadRates(state.selectedDate);
   } catch (error) {
     setBanner(error.message || "載入失敗。請稍後再試。", "danger");
@@ -404,7 +585,7 @@ els.reset.addEventListener("click", async () => {
   const today = todayTaipei();
   els.from.value = shiftDays(today, -29);
   els.to.value = today;
-  els.status.value = "all";
+  els.view.value = "daily";
   state.selectedDate = "";
   await applyFilter();
 });
@@ -415,6 +596,6 @@ els.from.addEventListener("keydown", (event) => {
 els.to.addEventListener("keydown", (event) => {
   if (event.key === "Enter") applyFilter();
 });
-els.status.addEventListener("change", applyFilter);
+els.view.addEventListener("change", applyFilter);
 
 boot();
