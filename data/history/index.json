@@ -2,6 +2,66 @@
   "retentionDays": 90,
   "dates": [
     {
+      "date": "2026-09-14",
+      "json": "bot-xrt-2026-09-14.json",
+      "csv": "bot-xrt-2026-09-14.csv"
+    },
+    {
+      "date": "2026-09-11",
+      "json": "bot-xrt-2026-09-11.json",
+      "csv": "bot-xrt-2026-09-11.csv"
+    },
+    {
+      "date": "2026-09-10",
+      "json": "bot-xrt-2026-09-10.json",
+      "csv": "bot-xrt-2026-09-10.csv"
+    },
+    {
+      "date": "2026-09-09",
+      "json": "bot-xrt-2026-09-09.json",
+      "csv": "bot-xrt-2026-09-09.csv"
+    },
+    {
+      "date": "2026-09-08",
+      "json": "bot-xrt-2026-09-08.json",
+      "csv": "bot-xrt-2026-09-08.csv"
+    },
+    {
+      "date": "2026-09-07",
+      "json": "bot-xrt-2026-09-07.json",
+      "csv": "bot-xrt-2026-09-07.csv"
+    },
+    {
+      "date": "2026-09-04",
+      "json": "bot-xrt-2026-09-04.json",
+      "csv": "bot-xrt-2026-09-04.csv"
+    },
+    {
+      "date": "2026-09-03",
+      "json": "bot-xrt-2026-09-03.json",
+      "csv": "bot-xrt-2026-09-03.csv"
+    },
+    {
+      "date": "2026-09-02",
+      "json": "bot-xrt-2026-09-02.json",
+      "csv": "bot-xrt-2026-09-02.csv"
+    },
+    {
+      "date": "2026-09-01",
+      "json": "bot-xrt-2026-09-01.json",
+      "csv": "bot-xrt-2026-09-01.csv"
+    },
+    {
+      "date": "2026-08-31",
+      "json": "bot-xrt-2026-08-31.json",
+      "csv": "bot-xrt-2026-08-31.csv"
+    },
+    {
+      "date": "2026-08-28",
+      "json": "bot-xrt-2026-08-28.json",
+      "csv": "bot-xrt-2026-08-28.csv"
+    },
+    {
       "date": "2026-08-27",
       "json": "bot-xrt-2026-08-27.json",
       "csv": "bot-xrt-2026-08-27.csv"
