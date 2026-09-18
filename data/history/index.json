@@ -2,6 +2,11 @@
   "retentionDays": 90,
   "dates": [
     {
+      "date": "2026-09-18",
+      "json": "bot-xrt-2026-09-18.json",
+      "csv": "bot-xrt-2026-09-18.csv"
+    },
+    {
       "date": "2026-09-17",
       "json": "bot-xrt-2026-09-17.json",
       "csv": "bot-xrt-2026-09-17.csv"
