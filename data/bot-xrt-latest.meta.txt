@@ -1,9 +1,9 @@
 source=https://rate.bot.com.tw/xrt/flcsv/0/day
-fetched_at_utc=2026-09-22T06:10:21.821836+00:00
-csv_sha256=9a69464978724346615648eebf9664d68042119502fae8253f4eaa39ba032ffb
-json_sha256=ffe3d2f10ce6669b2a4af1ba071adca7745a1e9031402fc14e873a71003258af
+fetched_at_utc=2026-09-22T07:10:31.747761+00:00
+csv_sha256=7c1ea4bb2eb58a345bc7e66ac0e75736de545d917cca205a45efac432d5959db
+json_sha256=e914e6faf1bd3efc0dfdc5965d971a32f2bb56de2f19fcbaeca7a2a0308a014b
 csv_bytes=3715
-json_bytes=22649
+json_bytes=22645
 rate_count=19
 history_dir=/home/runner/work/DownloadBankOfTaiwanExchangeRate/DownloadBankOfTaiwanExchangeRate/data/history
 retention_days=90
