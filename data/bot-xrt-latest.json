@@ -2,7 +2,7 @@
   "source": "Bank of Taiwan",
   "sourceUrl": "https://rate.bot.com.tw/xrt/flcsv/0/day",
   "base": "TWD",
-  "fetchedAtUtc": "2026-09-25T03:10:53.560428+00:00",
+  "fetchedAtUtc": "2026-09-25T04:10:33.539707+00:00",
   "rateCount": 19,
   "rates": [
     {
@@ -101,12 +101,12 @@
     {
       "currency": "AUD",
       "cash": {
-        "buy": 21.89,
-        "sell": 22.67
+        "buy": 21.91,
+        "sell": 22.69
       },
       "spot": {
-        "buy": 22.105,
-        "sell": 22.45
+        "buy": 22.125,
+        "sell": 22.47
       },
       "forward": {
         "buy": {
@@ -349,12 +349,12 @@
     {
       "currency": "THB",
       "cash": {
-        "buy": 0.8205,
-        "sell": 1.0105
+        "buy": 0.8215,
+        "sell": 1.0115
       },
       "spot": {
-        "buy": 0.9309,
-        "sell": 0.9769
+        "buy": 0.9319,
+        "sell": 0.9779
       },
       "forward": {
         "buy": {
@@ -380,8 +380,8 @@
     {
       "currency": "PHP",
       "cash": {
-        "buy": 0.4415,
-        "sell": 0.5735
+        "buy": 0.442,
+        "sell": 0.574
       },
       "spot": {
         "buy": null,
@@ -535,8 +535,8 @@
     {
       "currency": "MYR",
       "cash": {
-        "buy": 6.773,
-        "sell": 8.298
+        "buy": 6.767,
+        "sell": 8.292
       },
       "spot": {
         "buy": null,
@@ -692,12 +692,12 @@
     "AUD": {
       "currency": "AUD",
       "cash": {
-        "buy": 21.89,
-        "sell": 22.67
+        "buy": 21.91,
+        "sell": 22.69
       },
       "spot": {
-        "buy": 22.105,
-        "sell": 22.45
+        "buy": 22.125,
+        "sell": 22.47
       },
       "forward": {
         "buy": {
@@ -940,12 +940,12 @@
     "THB": {
       "currency": "THB",
       "cash": {
-        "buy": 0.8205,
-        "sell": 1.0105
+        "buy": 0.8215,
+        "sell": 1.0115
       },
       "spot": {
-        "buy": 0.9309,
-        "sell": 0.9769
+        "buy": 0.9319,
+        "sell": 0.9779
       },
       "forward": {
         "buy": {
@@ -971,8 +971,8 @@
     "PHP": {
       "currency": "PHP",
       "cash": {
-        "buy": 0.4415,
-        "sell": 0.5735
+        "buy": 0.442,
+        "sell": 0.574
       },
       "spot": {
         "buy": null,
@@ -1126,8 +1126,8 @@
     "MYR": {
       "currency": "MYR",
       "cash": {
-        "buy": 6.773,
-        "sell": 8.298
+        "buy": 6.767,
+        "sell": 8.292
       },
       "spot": {
         "buy": null,
