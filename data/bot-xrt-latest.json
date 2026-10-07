@@ -2,7 +2,7 @@
   "source": "Bank of Taiwan",
   "sourceUrl": "https://rate.bot.com.tw/xrt/flcsv/0/day",
   "base": "TWD",
-  "fetchedAtUtc": "2026-10-07T08:21:41.222940+00:00",
+  "fetchedAtUtc": "2026-10-07T09:04:36.509477+00:00",
   "rateCount": 19,
   "rates": [
     {
@@ -225,12 +225,12 @@
     {
       "currency": "JPY",
       "cash": {
-        "buy": 0.1921,
-        "sell": 0.2049
+        "buy": 0.1919,
+        "sell": 0.2047
       },
       "spot": {
-        "buy": 0.1989,
-        "sell": 0.2039
+        "buy": 0.1987,
+        "sell": 0.2037
       },
       "forward": {
         "buy": {
@@ -291,8 +291,8 @@
         "sell": null
       },
       "spot": {
-        "buy": 3.12,
-        "sell": 3.24
+        "buy": 3.11,
+        "sell": 3.23
       },
       "forward": {
         "buy": {
@@ -442,12 +442,12 @@
     {
       "currency": "EUR",
       "cash": {
-        "buy": 34.78,
-        "sell": 36.12
+        "buy": 34.8,
+        "sell": 36.14
       },
       "spot": {
-        "buy": 35.295,
-        "sell": 35.895
+        "buy": 35.315,
+        "sell": 35.915
       },
       "forward": {
         "buy": {
@@ -473,8 +473,8 @@
     {
       "currency": "KRW",
       "cash": {
-        "buy": 0.02203,
-        "sell": 0.02593
+        "buy": 0.02202,
+        "sell": 0.02592
       },
       "spot": {
         "buy": null,
@@ -816,12 +816,12 @@
     "JPY": {
       "currency": "JPY",
       "cash": {
-        "buy": 0.1921,
-        "sell": 0.2049
+        "buy": 0.1919,
+        "sell": 0.2047
       },
       "spot": {
-        "buy": 0.1989,
-        "sell": 0.2039
+        "buy": 0.1987,
+        "sell": 0.2037
       },
       "forward": {
         "buy": {
@@ -882,8 +882,8 @@
         "sell": null
       },
       "spot": {
-        "buy": 3.12,
-        "sell": 3.24
+        "buy": 3.11,
+        "sell": 3.23
       },
       "forward": {
         "buy": {
@@ -1033,12 +1033,12 @@
     "EUR": {
       "currency": "EUR",
       "cash": {
-        "buy": 34.78,
-        "sell": 36.12
+        "buy": 34.8,
+        "sell": 36.14
       },
       "spot": {
-        "buy": 35.295,
-        "sell": 35.895
+        "buy": 35.315,
+        "sell": 35.915
       },
       "forward": {
         "buy": {
@@ -1064,8 +1064,8 @@
     "KRW": {
       "currency": "KRW",
       "cash": {
-        "buy": 0.02203,
-        "sell": 0.02593
+        "buy": 0.02202,
+        "sell": 0.02592
       },
       "spot": {
         "buy": null,
