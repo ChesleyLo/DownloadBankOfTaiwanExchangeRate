@@ -2,7 +2,7 @@
   "source": "Bank of Taiwan",
   "sourceUrl": "https://rate.bot.com.tw/xrt/flcsv/0/day",
   "base": "TWD",
-  "fetchedAtUtc": "2026-10-16T10:30:41.534595+00:00",
+  "fetchedAtUtc": "2026-10-16T10:42:21.350097+00:00",
   "rateCount": 19,
   "rates": [
     {
@@ -318,12 +318,12 @@
     {
       "currency": "NZD",
       "cash": {
-        "buy": 17.85,
-        "sell": 18.7
+        "buy": 17.86,
+        "sell": 18.71
       },
       "spot": {
-        "buy": 18.18,
-        "sell": 18.48
+        "buy": 18.19,
+        "sell": 18.49
       },
       "forward": {
         "buy": {
@@ -473,8 +473,8 @@
     {
       "currency": "KRW",
       "cash": {
-        "buy": 0.02258,
-        "sell": 0.02648
+        "buy": 0.02255,
+        "sell": 0.02645
       },
       "spot": {
         "buy": null,
@@ -909,12 +909,12 @@
     "NZD": {
       "currency": "NZD",
       "cash": {
-        "buy": 17.85,
-        "sell": 18.7
+        "buy": 17.86,
+        "sell": 18.71
       },
       "spot": {
-        "buy": 18.18,
-        "sell": 18.48
+        "buy": 18.19,
+        "sell": 18.49
       },
       "forward": {
         "buy": {
@@ -1064,8 +1064,8 @@
     "KRW": {
       "currency": "KRW",
       "cash": {
-        "buy": 0.02258,
-        "sell": 0.02648
+        "buy": 0.02255,
+        "sell": 0.02645
       },
       "spot": {
         "buy": null,
