@@ -2,7 +2,7 @@
   "source": "Bank of Taiwan",
   "sourceUrl": "https://rate.bot.com.tw/xrt/flcsv/0/day",
   "base": "TWD",
-  "fetchedAtUtc": "2026-10-26T10:30:45.635441+00:00",
+  "fetchedAtUtc": "2026-10-26T10:46:41.738763+00:00",
   "rateCount": 19,
   "rates": [
     {
@@ -101,12 +101,12 @@
     {
       "currency": "AUD",
       "cash": {
-        "buy": 22.48,
-        "sell": 23.26
+        "buy": 22.46,
+        "sell": 23.24
       },
       "spot": {
-        "buy": 22.695,
-        "sell": 23.04
+        "buy": 22.675,
+        "sell": 23.02
       },
       "forward": {
         "buy": {
@@ -225,12 +225,12 @@
     {
       "currency": "JPY",
       "cash": {
-        "buy": 0.1975,
-        "sell": 0.2103
+        "buy": 0.1974,
+        "sell": 0.2102
       },
       "spot": {
-        "buy": 0.2043,
-        "sell": 0.2093
+        "buy": 0.2042,
+        "sell": 0.2092
       },
       "forward": {
         "buy": {
@@ -260,8 +260,8 @@
         "sell": null
       },
       "spot": {
-        "buy": 1.912,
-        "sell": 2.002
+        "buy": 1.909,
+        "sell": 1.999
       },
       "forward": {
         "buy": {
@@ -692,12 +692,12 @@
     "AUD": {
       "currency": "AUD",
       "cash": {
-        "buy": 22.48,
-        "sell": 23.26
+        "buy": 22.46,
+        "sell": 23.24
       },
       "spot": {
-        "buy": 22.695,
-        "sell": 23.04
+        "buy": 22.675,
+        "sell": 23.02
       },
       "forward": {
         "buy": {
@@ -816,12 +816,12 @@
     "JPY": {
       "currency": "JPY",
       "cash": {
-        "buy": 0.1975,
-        "sell": 0.2103
+        "buy": 0.1974,
+        "sell": 0.2102
       },
       "spot": {
-        "buy": 0.2043,
-        "sell": 0.2093
+        "buy": 0.2042,
+        "sell": 0.2092
       },
       "forward": {
         "buy": {
@@ -851,8 +851,8 @@
         "sell": null
       },
       "spot": {
-        "buy": 1.912,
-        "sell": 2.002
+        "buy": 1.909,
+        "sell": 1.999
       },
       "forward": {
         "buy": {
