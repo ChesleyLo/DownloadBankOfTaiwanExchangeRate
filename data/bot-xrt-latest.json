@@ -2,7 +2,7 @@
   "source": "Bank of Taiwan",
   "sourceUrl": "https://rate.bot.com.tw/xrt/flcsv/0/day",
   "base": "TWD",
-  "fetchedAtUtc": "2026-10-26T06:25:48.713967+00:00",
+  "fetchedAtUtc": "2026-10-26T07:10:38.223507+00:00",
   "rateCount": 19,
   "rates": [
     {
@@ -225,12 +225,12 @@
     {
       "currency": "JPY",
       "cash": {
-        "buy": 0.1978,
-        "sell": 0.2106
+        "buy": 0.198,
+        "sell": 0.2108
       },
       "spot": {
-        "buy": 0.2046,
-        "sell": 0.2096
+        "buy": 0.2048,
+        "sell": 0.2098
       },
       "forward": {
         "buy": {
@@ -260,8 +260,8 @@
         "sell": null
       },
       "spot": {
-        "buy": 1.91,
-        "sell": 2.0
+        "buy": 1.912,
+        "sell": 2.002
       },
       "forward": {
         "buy": {
@@ -349,12 +349,12 @@
     {
       "currency": "THB",
       "cash": {
-        "buy": 0.8338,
-        "sell": 1.0238
+        "buy": 0.8331,
+        "sell": 1.0231
       },
       "spot": {
-        "buy": 0.9442,
-        "sell": 0.9902
+        "buy": 0.9435,
+        "sell": 0.9895
       },
       "forward": {
         "buy": {
@@ -816,12 +816,12 @@
     "JPY": {
       "currency": "JPY",
       "cash": {
-        "buy": 0.1978,
-        "sell": 0.2106
+        "buy": 0.198,
+        "sell": 0.2108
       },
       "spot": {
-        "buy": 0.2046,
-        "sell": 0.2096
+        "buy": 0.2048,
+        "sell": 0.2098
       },
       "forward": {
         "buy": {
@@ -851,8 +851,8 @@
         "sell": null
       },
       "spot": {
-        "buy": 1.91,
-        "sell": 2.0
+        "buy": 1.912,
+        "sell": 2.002
       },
       "forward": {
         "buy": {
@@ -940,12 +940,12 @@
     "THB": {
       "currency": "THB",
       "cash": {
-        "buy": 0.8338,
-        "sell": 1.0238
+        "buy": 0.8331,
+        "sell": 1.0231
       },
       "spot": {
-        "buy": 0.9442,
-        "sell": 0.9902
+        "buy": 0.9435,
+        "sell": 0.9895
       },
       "forward": {
         "buy": {
