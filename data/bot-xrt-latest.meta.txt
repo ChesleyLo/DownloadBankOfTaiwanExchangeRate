@@ -1,7 +1,7 @@
 source=https://rate.bot.com.tw/xrt/flcsv/0/day
-fetched_at_utc=2026-10-28T02:10:17.510656+00:00
+fetched_at_utc=2026-10-28T02:10:35.757656+00:00
 csv_sha256=b3888418b36e3db121e25519429f05e8c8f8b63feb1bcf04863dfe2446757e1a
-json_sha256=db03b94d75b2d2804c34130541069a7cc09d582d12f2eb5d0a60888f0f4084a5
+json_sha256=03e5e3a9ed5b8ef22ca3aeb54de382cfbd4bc48467fa23b5593d04f6d7e7cc41
 csv_bytes=3715
 json_bytes=22663
 rate_count=19
