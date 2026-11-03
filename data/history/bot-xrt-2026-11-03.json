@@ -2,7 +2,7 @@
   "source": "Bank of Taiwan",
   "sourceUrl": "https://rate.bot.com.tw/xrt/flcsv/0/day",
   "base": "TWD",
-  "fetchedAtUtc": "2026-11-03T10:30:45.511179+00:00",
+  "fetchedAtUtc": "2026-11-03T17:58:31.677002+00:00",
   "rateCount": 19,
   "rates": [
     {
@@ -132,12 +132,12 @@
     {
       "currency": "CAD",
       "cash": {
-        "buy": 22.96,
-        "sell": 23.87
+        "buy": 22.92,
+        "sell": 23.83
       },
       "spot": {
-        "buy": 23.29,
-        "sell": 23.62
+        "buy": 23.25,
+        "sell": 23.58
       },
       "forward": {
         "buy": {
@@ -194,12 +194,12 @@
     {
       "currency": "CHF",
       "cash": {
-        "buy": 39.22,
-        "sell": 40.42
+        "buy": 39.15,
+        "sell": 40.35
       },
       "spot": {
-        "buy": 39.83,
-        "sell": 40.22
+        "buy": 39.76,
+        "sell": 40.15
       },
       "forward": {
         "buy": {
@@ -225,12 +225,12 @@
     {
       "currency": "JPY",
       "cash": {
-        "buy": 0.198,
-        "sell": 0.2108
+        "buy": 0.1975,
+        "sell": 0.2103
       },
       "spot": {
-        "buy": 0.2048,
-        "sell": 0.2098
+        "buy": 0.2043,
+        "sell": 0.2093
       },
       "forward": {
         "buy": {
@@ -260,8 +260,8 @@
         "sell": null
       },
       "spot": {
-        "buy": 1.923,
-        "sell": 2.013
+        "buy": 1.927,
+        "sell": 2.017
       },
       "forward": {
         "buy": {
@@ -318,12 +318,12 @@
     {
       "currency": "NZD",
       "cash": {
-        "buy": 17.93,
-        "sell": 18.78
+        "buy": 17.94,
+        "sell": 18.79
       },
       "spot": {
-        "buy": 18.26,
-        "sell": 18.56
+        "buy": 18.27,
+        "sell": 18.57
       },
       "forward": {
         "buy": {
@@ -349,12 +349,12 @@
     {
       "currency": "THB",
       "cash": {
-        "buy": 0.8421,
-        "sell": 1.0321
+        "buy": 0.8411,
+        "sell": 1.0311
       },
       "spot": {
-        "buy": 0.9525,
-        "sell": 0.9985
+        "buy": 0.9515,
+        "sell": 0.9975
       },
       "forward": {
         "buy": {
@@ -380,8 +380,8 @@
     {
       "currency": "PHP",
       "cash": {
-        "buy": 0.4506,
-        "sell": 0.5826
+        "buy": 0.4497,
+        "sell": 0.5817
       },
       "spot": {
         "buy": null,
@@ -566,12 +566,12 @@
     {
       "currency": "CNY",
       "cash": {
-        "buy": 4.813,
-        "sell": 4.975
+        "buy": 4.818,
+        "sell": 4.98
       },
       "spot": {
-        "buy": 4.88,
-        "sell": 4.94
+        "buy": 4.885,
+        "sell": 4.945
       },
       "forward": {
         "buy": {
@@ -723,12 +723,12 @@
     "CAD": {
       "currency": "CAD",
       "cash": {
-        "buy": 22.96,
-        "sell": 23.87
+        "buy": 22.92,
+        "sell": 23.83
       },
       "spot": {
-        "buy": 23.29,
-        "sell": 23.62
+        "buy": 23.25,
+        "sell": 23.58
       },
       "forward": {
         "buy": {
@@ -785,12 +785,12 @@
     "CHF": {
       "currency": "CHF",
       "cash": {
-        "buy": 39.22,
-        "sell": 40.42
+        "buy": 39.15,
+        "sell": 40.35
       },
       "spot": {
-        "buy": 39.83,
-        "sell": 40.22
+        "buy": 39.76,
+        "sell": 40.15
       },
       "forward": {
         "buy": {
@@ -816,12 +816,12 @@
     "JPY": {
       "currency": "JPY",
       "cash": {
-        "buy": 0.198,
-        "sell": 0.2108
+        "buy": 0.1975,
+        "sell": 0.2103
       },
       "spot": {
-        "buy": 0.2048,
-        "sell": 0.2098
+        "buy": 0.2043,
+        "sell": 0.2093
       },
       "forward": {
         "buy": {
@@ -851,8 +851,8 @@
         "sell": null
       },
       "spot": {
-        "buy": 1.923,
-        "sell": 2.013
+        "buy": 1.927,
+        "sell": 2.017
       },
       "forward": {
         "buy": {
@@ -909,12 +909,12 @@
     "NZD": {
       "currency": "NZD",
       "cash": {
-        "buy": 17.93,
-        "sell": 18.78
+        "buy": 17.94,
+        "sell": 18.79
       },
       "spot": {
-        "buy": 18.26,
-        "sell": 18.56
+        "buy": 18.27,
+        "sell": 18.57
       },
       "forward": {
         "buy": {
@@ -940,12 +940,12 @@
     "THB": {
       "currency": "THB",
       "cash": {
-        "buy": 0.8421,
-        "sell": 1.0321
+        "buy": 0.8411,
+        "sell": 1.0311
       },
       "spot": {
-        "buy": 0.9525,
-        "sell": 0.9985
+        "buy": 0.9515,
+        "sell": 0.9975
       },
       "forward": {
         "buy": {
@@ -971,8 +971,8 @@
     "PHP": {
       "currency": "PHP",
       "cash": {
-        "buy": 0.4506,
-        "sell": 0.5826
+        "buy": 0.4497,
+        "sell": 0.5817
       },
       "spot": {
         "buy": null,
@@ -1157,12 +1157,12 @@
     "CNY": {
       "currency": "CNY",
       "cash": {
-        "buy": 4.813,
-        "sell": 4.975
+        "buy": 4.818,
+        "sell": 4.98
       },
       "spot": {
-        "buy": 4.88,
-        "sell": 4.94
+        "buy": 4.885,
+        "sell": 4.945
       },
       "forward": {
         "buy": {
