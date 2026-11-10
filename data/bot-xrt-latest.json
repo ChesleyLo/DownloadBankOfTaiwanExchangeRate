@@ -2,7 +2,7 @@
   "source": "Bank of Taiwan",
   "sourceUrl": "https://rate.bot.com.tw/xrt/flcsv/0/day",
   "base": "TWD",
-  "fetchedAtUtc": "2026-11-10T10:13:47.879738+00:00",
+  "fetchedAtUtc": "2026-11-10T10:30:22.153410+00:00",
   "rateCount": 19,
   "rates": [
     {
@@ -101,12 +101,12 @@
     {
       "currency": "AUD",
       "cash": {
-        "buy": 22.34,
-        "sell": 23.12
+        "buy": 22.32,
+        "sell": 23.1
       },
       "spot": {
-        "buy": 22.555,
-        "sell": 22.9
+        "buy": 22.535,
+        "sell": 22.88
       },
       "forward": {
         "buy": {
@@ -349,12 +349,12 @@
     {
       "currency": "THB",
       "cash": {
-        "buy": 0.8557,
-        "sell": 1.0457
+        "buy": 0.8548,
+        "sell": 1.0448
       },
       "spot": {
-        "buy": 0.9661,
-        "sell": 1.0121
+        "buy": 0.9652,
+        "sell": 1.0112
       },
       "forward": {
         "buy": {
@@ -380,8 +380,8 @@
     {
       "currency": "PHP",
       "cash": {
-        "buy": 0.4576,
-        "sell": 0.5896
+        "buy": 0.4566,
+        "sell": 0.5886
       },
       "spot": {
         "buy": null,
@@ -692,12 +692,12 @@
     "AUD": {
       "currency": "AUD",
       "cash": {
-        "buy": 22.34,
-        "sell": 23.12
+        "buy": 22.32,
+        "sell": 23.1
       },
       "spot": {
-        "buy": 22.555,
-        "sell": 22.9
+        "buy": 22.535,
+        "sell": 22.88
       },
       "forward": {
         "buy": {
@@ -940,12 +940,12 @@
     "THB": {
       "currency": "THB",
       "cash": {
-        "buy": 0.8557,
-        "sell": 1.0457
+        "buy": 0.8548,
+        "sell": 1.0448
       },
       "spot": {
-        "buy": 0.9661,
-        "sell": 1.0121
+        "buy": 0.9652,
+        "sell": 1.0112
       },
       "forward": {
         "buy": {
@@ -971,8 +971,8 @@
     "PHP": {
       "currency": "PHP",
       "cash": {
-        "buy": 0.4576,
-        "sell": 0.5896
+        "buy": 0.4566,
+        "sell": 0.5886
       },
       "spot": {
         "buy": null,
