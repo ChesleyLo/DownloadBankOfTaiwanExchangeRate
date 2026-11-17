@@ -2,7 +2,7 @@
   "source": "Bank of Taiwan",
   "sourceUrl": "https://rate.bot.com.tw/xrt/flcsv/0/day",
   "base": "TWD",
-  "fetchedAtUtc": "2026-11-17T10:30:41.533590+00:00",
+  "fetchedAtUtc": "2026-11-17T10:58:08.759929+00:00",
   "rateCount": 19,
   "rates": [
     {
@@ -194,12 +194,12 @@
     {
       "currency": "CHF",
       "cash": {
-        "buy": 38.39,
-        "sell": 39.59
+        "buy": 38.36,
+        "sell": 39.56
       },
       "spot": {
-        "buy": 39.0,
-        "sell": 39.39
+        "buy": 38.97,
+        "sell": 39.36
       },
       "forward": {
         "buy": {
@@ -785,12 +785,12 @@
     "CHF": {
       "currency": "CHF",
       "cash": {
-        "buy": 38.39,
-        "sell": 39.59
+        "buy": 38.36,
+        "sell": 39.56
       },
       "spot": {
-        "buy": 39.0,
-        "sell": 39.39
+        "buy": 38.97,
+        "sell": 39.36
       },
       "forward": {
         "buy": {
