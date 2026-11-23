@@ -2,7 +2,7 @@
   "source": "Bank of Taiwan",
   "sourceUrl": "https://rate.bot.com.tw/xrt/flcsv/0/day",
   "base": "TWD",
-  "fetchedAtUtc": "2026-11-23T10:43:27.596318+00:00",
+  "fetchedAtUtc": "2026-11-23T11:01:54.171325+00:00",
   "rateCount": 19,
   "rates": [
     {
@@ -101,12 +101,12 @@
     {
       "currency": "AUD",
       "cash": {
-        "buy": 21.48,
-        "sell": 22.26
+        "buy": 21.46,
+        "sell": 22.24
       },
       "spot": {
-        "buy": 21.695,
-        "sell": 22.04
+        "buy": 21.675,
+        "sell": 22.02
       },
       "forward": {
         "buy": {
@@ -132,12 +132,12 @@
     {
       "currency": "CAD",
       "cash": {
-        "buy": 22.48,
-        "sell": 23.39
+        "buy": 22.46,
+        "sell": 23.37
       },
       "spot": {
-        "buy": 22.81,
-        "sell": 23.14
+        "buy": 22.79,
+        "sell": 23.12
       },
       "forward": {
         "buy": {
@@ -442,12 +442,12 @@
     {
       "currency": "EUR",
       "cash": {
-        "buy": 35.3,
-        "sell": 36.64
+        "buy": 35.27,
+        "sell": 36.61
       },
       "spot": {
-        "buy": 35.815,
-        "sell": 36.415
+        "buy": 35.785,
+        "sell": 36.385
       },
       "forward": {
         "buy": {
@@ -692,12 +692,12 @@
     "AUD": {
       "currency": "AUD",
       "cash": {
-        "buy": 21.48,
-        "sell": 22.26
+        "buy": 21.46,
+        "sell": 22.24
       },
       "spot": {
-        "buy": 21.695,
-        "sell": 22.04
+        "buy": 21.675,
+        "sell": 22.02
       },
       "forward": {
         "buy": {
@@ -723,12 +723,12 @@
     "CAD": {
       "currency": "CAD",
       "cash": {
-        "buy": 22.48,
-        "sell": 23.39
+        "buy": 22.46,
+        "sell": 23.37
       },
       "spot": {
-        "buy": 22.81,
-        "sell": 23.14
+        "buy": 22.79,
+        "sell": 23.12
       },
       "forward": {
         "buy": {
@@ -1033,12 +1033,12 @@
     "EUR": {
       "currency": "EUR",
       "cash": {
-        "buy": 35.3,
-        "sell": 36.64
+        "buy": 35.27,
+        "sell": 36.61
       },
       "spot": {
-        "buy": 35.815,
-        "sell": 36.415
+        "buy": 35.785,
+        "sell": 36.385
       },
       "forward": {
         "buy": {
